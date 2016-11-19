@@ -15,11 +15,11 @@ private:
   int cost;
 
 public:
-  struct Item(string itemType, int cost);
+  Item(string itemType, int cost);
   string getType();
   int getCost();
 
-}
+};
 
 class Weapon: public Item
 {
@@ -32,57 +32,64 @@ private:
   /*We had a cost variable listed in the UML, but I think that was wrong since
   we are extending item*/
 public:
-  struct Weapon(string weapType, int damage);
+  Weapon(string weapType, int damage);
   string getType();
   string getDamage();
-}
+};
 
 class Potion: public Item
 {
 private:
   string type;
-  int recovPoints
+  int recovPoints;
   /*Also think that cost should be taken care of in the item superclass*/
 public:
-  struct Potion(int recovPoints);
+  Potion(int recovPoints);
   string getType();
   int getRecovPoints();
 
-}
+};
 
 
 class Inventory
 {
 private:
+  Item* weapons;
+  Item* potions;
+  int activeWeapon;
 
-
-
-}
+public:
+  Inventory(Item* weapons, Item* potions);
+  Inventory();
+  /*picking specific getters and setter will probably be relatively dynamic*/
+  int getActiveWeapon();
+  Item* getListOfWeapons();
+  Item* getListOfPotions();
+  void displayInventory();
+  void drop(Item i);
+  void add(Item i, string type);
+};
 
 
 
 class Character
 {
-      private:
-        string name;
-        string type;
-        Inventory inv;
-        int level;
-        int currHealth;
-        int maxHealth;
-        int offense;
-        int defense;
-        int gold;
-        void setMaxHealth(int i);
+private:
+ string name;
+ string type;
+ Inventory inv;
+ int level;
+ int currHealth;
+ int maxHealth;
+ int offense;
+ int defense;
+ int gold;
+ void setMaxHealth(int i);
 
-
-      public:
-
-        struct Character(string name, string type);
-        string getName();
-        void attack(Character opponent);
-        void heal(int potionIndex);
-        void run();
-
-
-}
+public:
+ Character(string name, string type);
+ string getName();
+ void attack(Character opponent);
+ void heal(int potionIndex);
+ void run();
+};
