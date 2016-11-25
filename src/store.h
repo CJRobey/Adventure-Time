@@ -8,10 +8,32 @@ class Store {
   public:
     void setInventory(Inventory inventory);
     Inventory getInventory();
-    void buy(Item i);
-    void sell(Item i);
+    bool buy(Item i);
+    int sell(Item i);
 };
 
 Store::Store(Inventory inventory) {
  this->inventory = new Inventory(inventory);
+}
+
+void setInventory(Inventory inventory) {
+  this->inventory = new Inventory(inventory);
+}
+
+Inventory getInventory(){
+   return this->inventory;
+}
+
+//Character can call only if they have enough money.
+//Inventory item should check if item is in the store
+
+bool buy(Item i){
+  if(inventory.isIn(i)) return true;
+  else{
+    return false;
+  }
+}
+
+int sell(Item i){
+  return i.getCost();
 }
