@@ -26,9 +26,8 @@ public:
  Character(string name, string type);
  string getName();
  void attack(Character opponent);
- void heal(Potion pot);
+ void heal();
  void battle(Character opponent);
- void run();
 };
 
 
@@ -61,7 +60,6 @@ void Character::battle(Character opponent)
   What kind of effect will defense, offense, and weapon type have on damange?
   Will we have accuracy of hits?
   Will we randomize damage within a certain range?*/
-
   cout << "You have entered into a battle!" << endl;
   cout << "Input a number regarding how you would like to proceed: " << endl;
 
@@ -69,7 +67,8 @@ void Character::battle(Character opponent)
 
   cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
 
-  int userIn >> cin;
+  int userIn;
+  cin >> userIn;
 
   switch(userIn) {
     case 1:
@@ -88,14 +87,8 @@ void Character::battle(Character opponent)
         cout << "Your character failed to run away." << endl;
         break;
       }
-
   }
-
   }
-
-
-
-
 }
 
 
@@ -106,12 +99,12 @@ void Character::attack(Character opponent)
 
 void Character::heal()
 {
-  potion = inv.getPotion();
+  Potion potion = inv.getPotion();
   if (potion == NULL) {
     cout << "You don't have a potion you impotent conglomeration of idiocy." << endl;
     return;
   }
-  potionIndex = potion.recovPoints;
+  int potionIndex = potion.recovPoints;
 
   if (currHealth < maxHealth-potionIndex) {
   this->currHealth += potionIndex;
@@ -123,6 +116,3 @@ else {
 
 
 }
-
-
-void run();
