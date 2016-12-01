@@ -28,6 +28,7 @@ public:
  void attack(Character opponent);
  void heal();
  void battle(Character opponent);
+ void levelUp();
 };
 
 
@@ -43,6 +44,17 @@ Character::Character(string name, string type)
   2. determine health, off, def, etc... which will all likely be a product
   of level*/
 
+
+}
+
+void levelUp() {
+  this->level++;
+  setMaxHealth(maxHealth+5);
+
+}
+
+void setMaxHealth(int i) {
+  this->maxHealth = i;
 }
 
 
@@ -101,7 +113,7 @@ void Character::heal()
 {
   Potion potion = inv.getPotion();
   if (potion == NULL) {
-    cout << "You don't have a potion you impotent conglomeration of idiocy." << endl;
+    cout << "You don't have a potion, you impotent conglomeration of idiocy." << endl;
     return;
   }
   int potionIndex = potion.recovPoints;
