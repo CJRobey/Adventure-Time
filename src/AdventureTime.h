@@ -69,27 +69,3 @@ public:
   void drop(Item i);
   void add(Item i, string type);
 };
-
-
-
-class Character
-{
-private:
- string name;
- string type;
- Inventory inv;
- int level;
- int currHealth;
- int maxHealth;
- int offense;
- int defense;
- int gold;
- void setMaxHealth(int i);
-
-public:
- Character(string name, string type);
- string getName();
- void attack(Character opponent);
- void heal(int potionIndex);
- void run();
-};

@@ -14,6 +14,9 @@ private:
  int level;
  int currHealth;
  int maxHealth;
+
+ /*offense is the sum of your level times 5 and the damage
+of the weapon equipped */
  int offense;
  int defense;
  int gold;
@@ -23,7 +26,8 @@ public:
  Character(string name, string type);
  string getName();
  void attack(Character opponent);
- void heal(int potionIndex);
+ void heal(Potion pot);
+ void battle(Character opponent);
  void run();
 };
 
@@ -59,24 +63,34 @@ void Character::battle(Character opponent)
   Will we randomize damage within a certain range?*/
 
   cout << "You have entered into a battle!" << endl;
-  cout << "Input a number how you would like to proceed: " << endl;
+  cout << "Input a number regarding how you would like to proceed: " << endl;
 
-  while (true));
+  while (true) {
 
   cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
 
-  int userIn << cin;
+  int userIn >> cin;
 
   switch(userIn) {
     case 1:
         attack(opponent);
     break;
     case 2:
-      heal(inv.potion);
+      heal();
     break;
     case 3:
-      cout << "You ran away! " << endl;
-    return;    
+    int v1 = rand() % 100;
+      if (v1 < 50) {
+      cout << "You managed to run away! " << endl;
+      return;
+    }
+      else {
+        cout << "Your character failed to run away." << endl;
+        break;
+      }
+
+  }
+
   }
 
 
@@ -90,14 +104,23 @@ void Character::attack(Character opponent)
 
 }
 
-void Character::heal(Potion potion)
+void Character::heal()
 {
+  potion = inv.getPotion();
+  if (potion == NULL) {
+    cout << "You don't have a potion you impotent conglomeration of idiocy." << endl;
+    return;
+  }
+  potionIndex = potion.recovPoints;
+
   if (currHealth < maxHealth-potionIndex) {
-  this->currHealth += potion.recovPoints;
+  this->currHealth += potionIndex;
+  cout << "You've been healed by " << potionIndex << " health points." << endl;
 }
 else {
   this->currHealth = maxHealth;
 }
+
 
 }
 
