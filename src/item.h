@@ -21,8 +21,6 @@ class Item {
 
     void setName(string name){this->name = name;} //set name of item
 
-    //void setType(string type){this->type = type;} //set type of item
-
     void setCost(int cost){ //set cost and therefore worth of item
       this->cost = cost;
       this->worth = int(cost*0.6);  //worth is 60% of initial cost
@@ -64,11 +62,13 @@ class Potion  : public Item {
 
   private:  //healing variable is visible by only the Weapon class
     int healing;
+    int amount;
 
   public:
 
     Potion(){ //default constructor must initialize the type of item
       this->type = "Potion";
+      this->amount = 0;
     }
 
     Potion(int healing) {  //second constructor must also initialize type
@@ -77,6 +77,8 @@ class Potion  : public Item {
     }
 
     void setHealing(int healing) {this->healing = healing;} //set healing value
+
+    void setAmount(int amount) {this->amount = amount;} //set amount of potions
 
     int getHealing(){return this->healing;} //return healing value
 
