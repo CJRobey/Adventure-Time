@@ -25,6 +25,8 @@ public:
  void attack(Character opponent);
  void heal(int potionIndex);
  void run();
+ void checkIfDead();
+ int getCurrHealth();
 };
 
 
@@ -76,7 +78,7 @@ void Character::battle(Character opponent)
     break;
     case 3:
       cout << "You ran away! " << endl;
-    return;    
+    return;
   }
 
 
@@ -84,10 +86,28 @@ void Character::battle(Character opponent)
 
 }
 
+int Character::getCurrHealth
 
 void Character::attack(Character opponent)
 {
+  int attackPower = rand() % (offense + 1);
+  if (attackPower == 0){
+    cout << "Your attack was ineffective!\nThe monster laughs at your failure."
+    << endl;
+  }
+  else{
+    opponent.
+  }
+}
 
+void Character::decrementHealth(int damage){
+
+}
+
+void Character::checkIfDead(){
+  if (currHealth < 0){
+    cout << "You've died in battle!\n*GAME OVER*" << endl;
+  }
 }
 
 void Character::heal(Potion potion)
