@@ -18,6 +18,8 @@ private:
  /*offense is the sum of your level times 5 and the damage
 of the weapon equipped */
  int offense;
+
+/*defense probably isn't going to be a thing*/
  int defense;
  int gold;
  void setMaxHealth(int i);
@@ -26,9 +28,12 @@ public:
  Character(string name, string type);
  string getName();
  void attack(Character opponent);
- void heal();
  void battle(Character opponent);
  void levelUp();
+ void heal(int potionIndex);
+ void checkIfDead();
+ int getCurrHealth();
+
 };
 
 
@@ -38,6 +43,10 @@ Character::Character(string name, string type)
   this->name = name;
   this->type = type;
   this->level = 1;
+  this->maxHealth = 20;
+  this->currHealth = maxHealth;
+  this->offense = offense + inv.getActiveWeapon().getDamage();
+
 
   /*Other things that we need to do here:
   1. initialize the Inventory
@@ -103,13 +112,31 @@ void Character::battle(Character opponent)
   }
 }
 
+int Character::getCurrHealth
 
 void Character::attack(Character opponent)
 {
+  int attackPower = rand() % (offense + 1);
+  if (attackPower == 0){
+    cout << "Your attack was ineffective!\nThe monster laughs at your failure."
+    << endl;
+  }
+  else{
+    opponent.
+  }
+}
+
+void Character::decrementHealth(int damage){
 
 }
 
-void Character::heal()
+void Character::checkIfDead(){
+  if (currHealth < 0){
+    cout << "You've died in battle!\n*GAME OVER*" << endl;
+  }
+}
+
+void Character::heal(Potion potion)
 {
   Potion potion = inv.getPotion();
   if (potion == NULL) {
