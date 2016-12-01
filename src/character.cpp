@@ -26,15 +26,10 @@ public:
  Character(string name, string type);
  string getName();
  void attack(Character opponent);
-<<<<<<< HEAD
- void heal();
  void battle(Character opponent);
-=======
  void heal(int potionIndex);
- void run();
  void checkIfDead();
  int getCurrHealth();
->>>>>>> Michael
 };
 
 
@@ -85,7 +80,6 @@ void Character::battle(Character opponent)
       heal();
     break;
     case 3:
-<<<<<<< HEAD
     int v1 = rand() % 100;
       if (v1 < 50) {
       cout << "You managed to run away! " << endl;
@@ -96,10 +90,6 @@ void Character::battle(Character opponent)
         break;
       }
   }
-=======
-      cout << "You ran away! " << endl;
-    return;
->>>>>>> Michael
   }
 }
 
@@ -121,9 +111,6 @@ void Character::decrementHealth(int damage){
 
 }
 
-<<<<<<< HEAD
-void Character::heal()
-=======
 void Character::checkIfDead(){
   if (currHealth < 0){
     cout << "You've died in battle!\n*GAME OVER*" << endl;
@@ -131,7 +118,6 @@ void Character::checkIfDead(){
 }
 
 void Character::heal(Potion potion)
->>>>>>> Michael
 {
   Potion potion = inv.getPotion();
   if (potion == NULL) {
