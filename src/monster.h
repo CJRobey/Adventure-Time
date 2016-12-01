@@ -15,7 +15,6 @@ class Monster {
 
 Monster::Monster(int level)
 {
-    if
 
 }
 
@@ -27,3 +26,6 @@ int getHealth(){
   return health;
 }
 
+void isAttacked(){
+  //print updated monster stats--> if dead make a big deal;
+}
