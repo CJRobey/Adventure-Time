@@ -6,6 +6,10 @@ int main () {
 	int pChoice = 0;
 	int helped = 0;
 	bool end = false;
+	bool found = false;
+  	bool leftRoom = false;
+    	bool rightRoom = false;
+    	bool seenBeggar = false;
 	string pResponse = "";
 	Store s;
 	
