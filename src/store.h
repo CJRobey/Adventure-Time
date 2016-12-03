@@ -9,7 +9,7 @@ class Store
 {
   private:
 	   Weapon wepinventory[] = {Item(Weapon,5,3,Rusty_Fork),Item(Weapon,20,12,Dubious_Dagger),
-       Item(Weapon,50,30,Numchucks_of_Unending_Smiting),
+       Item(Weapon,50,30,Numchucks_of_Unending_Smiting),Item(Weapon,70,42,Absurdly_Sharp_Lance)
        Item(Weapon,80,48,Soulstealing_Demonblade),Item(Weapon,100,60,Blade_of_the_Eternal_Gods),
      Item(Weapon,300,180,Paintbrush_of_the_Devil),Item(Weapon,500,300,Black_Hole_Hammer)};
      Potion potinventory[] = {Item(Potion,10,6,Health_Potion)};
