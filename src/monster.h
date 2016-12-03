@@ -1,6 +1,11 @@
-#include "item.h";
+#include <string>
+#include <iostream>
+#include <cstdlib>
+#include "AdventureTime.h"
+
 class Monster {
   private:
+	string name;
     int attack;
     int health;
     Item* items = new Item[10];
@@ -8,15 +13,16 @@ class Monster {
   public:
     int getAttack();
     int getHealth();
-    void setAttack();
-    void setHealth();
+    int getName();
     void decHealth(int attackPower);
-    void ptak();
+    int ptak(int currHealth);
 };
 
-Monster::Monster(int level)
+Monster::Monster(int health, int attack, string Name)
 {
-
+	this->health=health;
+	this->attack=attack;
+	this->name=name;
 }
 
 int getAttack(){
@@ -28,10 +34,17 @@ int getHealth(){
 }
 
 void decHealth(int attackPower){
-  
-  //print updated monster stats--> if dead make a big deal;
+	this->health-=attackPower;
 }
 
-void ptak(Character* char){
- //print character points
+int ptak(int currHealth){
+ cout<<"Your current health is " << currHeath << " but not for long!" << endl;
+ int canAttack = rand() % (5);
+ if(canAttack==0) {
+	cout<< "Oh no! I missed! How is that possible!?"
+	return 0;
+ }
+ else{
+	return attack;
+ }
 }
