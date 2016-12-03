@@ -39,3 +39,7 @@ bool buy(Item i){
 int sell(Item i){
   return i.getCost();
 }
+
+int print() {
+   
+}
