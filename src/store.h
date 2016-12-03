@@ -10,15 +10,18 @@ class Store
   private:
 	   Weapon wepinventory[];
      Potion potinventory[];
+     string currentResponse;
+     void getWepInventory();
+     void getPotInventory();
+     void getCharInventory();
+     void buy(string itemnumber, int itemtype);
+     int sell(Item i);
+     string addwepdesc();
+     string addpotdesc();
      
   public:
     void openStore();
-    void getWepInventory();
-    void getPotInventory();
-    void getCharInventory();
-    void buy(string itemnumber, int itemtype);
-    int sell(Item i);
-    string currentResponse;
+    
 };
 
 void openStore(Character charactername, Inventory inventoryname)
@@ -63,7 +66,7 @@ void getWepInventory()
   cout << "For sale:\n"
 	for(int i=0;i<sizeOf(wepinventory);i++)
 	{
-		cout << i+1 << ". " << getName(wepinventory[i]) <<"\n";
+		cout << i+1 << ". " << addwepdesc() << getName(wepinventory[i]) <<", capable of dealing "<< getdamage(wepinventory[i])<<" damage.\n";
 	}
    cout << i+2 <<". Back to menu.\n(Please enter a number to choose)";
    cin >> currentResponse;
@@ -78,6 +81,7 @@ void getWepInventory()
    else
    {
      cout << "Not a valid input."
+     getWepInventory();
    }
 
 }
@@ -86,7 +90,7 @@ void getPotInventory()
 {
 	for(int i=0;i< sizeOf(wepinventory);i++)
 	{
-    cout << i+1 << ". " << getName(potinventory[i])<<"\n";
+    cout << i+1 << ". " << addpotdesc() << getName(potinventory[i]) <<", capable of healing "<< getdamage(potinventory[i])<<" damage.\n";
 	}
   cout << i+2 <<". Back to menu.\n(Please enter a number to choose)"
   cin >> currentResponse;
@@ -101,6 +105,7 @@ void getPotInventory()
   else
   {
     cout << "Not a valid input."
+    getPotInventory();
   }
   
 }
@@ -140,4 +145,15 @@ void buy(string itemnumber, int itemtype)
 void sell(itemname)
 {
         charactername.incGold(inventoryname.drop(itemname));
+}
+
+string addwepdesc()
+{
+  String wepdescriptors[] = {"A magnificient ","A highly economical ","A flawless ", "An impressive ","An exceptional ", "An incredible value on this "};
+  return wepdescriptors[rand() % sizeOf(wepdescriptors)];
+}
+string addpotdesc()
+{
+  String potdescriptors[] = {"A value-size ","A great-tasting ","A value-added ","A rock-bottom-priced ", "A great deal on this "};
+  return wepdescriptors[rand() % sizeOf(potdescriptors)];
 }
