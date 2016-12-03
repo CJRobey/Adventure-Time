@@ -9,7 +9,6 @@ class Character
 {
 private:
  string name;
- string type;
  Inventory inv;
  int level;
  int currHealth;
@@ -23,7 +22,7 @@ of the weapon equipped */
 
 public:
  Character();
- Character(string name, string type);
+ Character(string name, Inventory inv);
  string getName();
  void attack(Monster mon);
  bool battle(Monster mon);
@@ -34,19 +33,21 @@ public:
  int getGold();
  void decGold(int i);
  void incGold(int i);
+ void dispCharStats();
+ void setOffense(int damage);
 
 
 };
 
-Character(string name, string type)
+Character(string name, Inventory inv)
 {
   this->name = name;
-  this->type = type;
   this->level = 1;
   this->maxHealth = 20;
   this->currHealth = maxHealth;
-  this->offense = offense + inv.getActiveWeapon().getDamage();
+  this->offense = offense;
   this->gold = 0;
+  this->inv = inv;
 
   /*Other things that we need to do here:
   1. initialize the Inventory
@@ -66,6 +67,10 @@ void Character::incGold(int i) {
 /*the following will be used for buying items */
 void Character::decGold(int i) {
   this->gold = gold - i;
+}
+
+void Character::setOffense(int x) {
+  this->offense = offense + x;
 }
 
 void Character::levelUp() {
@@ -114,7 +119,7 @@ bool Character::battle(Monster mon)
         attack(mon);
         if (mon.getHealth <= 0) {
           cout << "The battle is over." << endl;
-          return;
+          return deadness;
         }
         int damageAmount = mon.ptak(currHealth);
         decHealth(damageAmount);
@@ -140,9 +145,9 @@ bool Character::battle(Monster mon)
       //choose to attempt to run
       case 3:
       int v1 = rand() % 100;
-      if (v1 < 50) {
+      if (v1 < mon.getEscapeChance()) {
         cout << "You managed to run away! " << endl;
-        return;
+        return deadness;
       }
       else {
         cout << "Your character failed to run away." << endl;
@@ -205,11 +210,22 @@ void Character::heal(Potion potion)
   if (currHealth < maxHealth-potionIndex) {
   this->currHealth += potionIndex;
   cout << "You've been healed by " << potionIndex << " health points." << endl;
+  }
+  else {
+    int arbNum = currHealth;
+    this->currHealth = maxHealth;
+    cout << "You've been healed by " << maxHealth - arbNum << " health points." << endl;
+  }
+
 }
-else {
-  int arbNum = currHealth;
-  this->currHealth = maxHealth;
-  cout << "You've been healed by " << maxHealth - arbNum << " health points." << endl;
-}
+
+void Character::dispCharStats()
+{
+  cout << "Character name: " << this->name << endl;
+  cout << "level: " << this->level << endl;
+  cout << "maximum health: " << this->maxHealth << endl;
+  cout << "current health: " << this->currHealth << endl;
+  cout << "offense: " << this->offense << endl;
+  cout << "gold: " << this->gold << endl;
 
 }
