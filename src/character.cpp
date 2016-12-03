@@ -34,6 +34,7 @@ public:
  void decGold();
  void incGold();
 
+
 };
 
 void Character(string name, string type)
@@ -46,7 +47,6 @@ void Character(string name, string type)
   this->offense = offense + inv.getActiveWeapon().getDamage();
   this->gold = 0;
 
-  
   /*Other things that we need to do here:
   1. initialize the Inventory
   2. determine health, off, def, etc... which will all likely be a product
@@ -79,13 +79,13 @@ void setMaxHealth(int i) {
   this->maxHealth = i;
 }
 
-string Character::getName()
+string getName()
 {
     return this->name;
 };
 
 
-void Character::battle(Monster mon)
+void battle(Monster mon)
 {
   /*combat algorithms need to be determined
   What kind of effect will defense, offense, and weapon type have on damage?
@@ -103,8 +103,12 @@ void Character::battle(Monster mon)
 
   switch(userIn) {
     case 1:
-        attack(mon);
-        mon.ptak(*currHealth);
+      attack(mon);
+      if (mon.getHealth <= 0) {
+        cout << "The battle is over." << endl;
+        return;
+      }
+      mon.ptak(*currHealth);
     break;
     case 2:
       heal();
@@ -112,15 +116,15 @@ void Character::battle(Monster mon)
     break;
     case 3:
     int v1 = rand() % 100;
-      if (v1 < 50) {
+    if (v1 < 50) {
       cout << "You managed to run away! " << endl;
       return;
     }
-      else {
-        cout << "Your character failed to run away." << endl;
-        mon.ptak(*currHealth);
-        break;
-      }
+    else {
+      cout << "Your character failed to run away." << endl;
+      mon.ptak(*currHealth);
+    break;
+    }
   }
   }
 }
@@ -129,7 +133,7 @@ int Character::getCurrHealth {
   return this->currHealth;
 }
 
-void Character::attack(Monster mon)
+void attack(Monster mon)
 {
   int attackPower = rand() % (offense + 1);
   if (attackPower == 0){
@@ -138,16 +142,21 @@ void Character::attack(Monster mon)
   }
   else{
     mon.decHealth(attackPower);
+    if (mon.getHealth() <= 0) {
+      cout << "Your hit landed for " << attackPower << " damage points and killed the monster!" << endl;
+      return;
+    }
+
     cout << "The monster was hit for " << attackPower << " points." << endl;
-    cout << "The monster now has " mon.getHealh() " health points remainin.";
+    cout << "The monster now has " mon.getHealh() " health points remainin." << endl;
   }
 }
 
-void Character::decrementHealth(int damage){
+void decrementHealth(int damage){
   this->currHealth = currHealth - damage;
 }
 
-bool Character::checkIfDead(){
+bool checkIfDead(){
   if (currHealth <= 0){
     cout << "You've died in battle!\n*GAME OVER*" << endl;
     return true;
@@ -173,6 +182,5 @@ else {
   this->currHealth = maxHealth;
   cout << "You've been healed by " << maxHealth - arbNum << " health points." << endl;
 }
-
 
 }
