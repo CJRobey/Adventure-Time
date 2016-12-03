@@ -38,7 +38,7 @@ class Item {
 
   public:
     Item();
-    Item(string type, int cost, int worth, string name) ;
+    Item(string type, int cost, int worth, string name);
 
     void setName(string name);
 
@@ -59,12 +59,9 @@ class Weapon  : public Item {
     int damage;
 
   public:
-
     Weapon();
     Weapon(int damage);
-
     void setDamage(int damage);
-
     int getDamage();
 
 };
@@ -82,47 +79,35 @@ class Potion : public Item {
     void setHealing(int healing);
     void setAmount(int amount);
     int getHealing();
+	int getAmount();
 
 };
+
 
 
 class Inventory {
 
   private:
     map<string, Weapon> Weapons;
-    map<string, Potion> Potions;
+    Potion P;
 
   public:
     Inventory();
-    Inventory(map<string, Weapon> Weapons, map<string, Potion> Potions);
     void disInventory();
-    void drop(Potion P);
-    void drop(Weapon W);
-    void add(Potion P);
-    void add(Weapon W);
-    void addWeapon(string weaponName, Weapon W);
-    void removeWeapon(string weaponName);
-    void addPotion(string potionName, Potion P);
-    void removePotion(string potionName);
-    Potion usePotion(string potionName);
+    int drop(string itemName);
+    void addPotion(int amount);
+    void addWeapon(Weapon W);
+    int usePotion();
+    int getWeapon();
+    void setPotionAmount(int amount);
+    void setPotionHealing(int healing);
+    void setPotionCost(int cost);
+    void setPotionName(string name);
+    int getPotionAmount();
+    int getPotionHealing();
+
 };
 
-
-class Store
-{
-  private:
-	   Weapon wepinventory[];
-     Potion potinventory[];
-
-  public:
-    void openStore();
-    void getWepInventory();
-    void getPotInventory();
-    void getCharInventory();
-    bool buy(int i);
-    int sell(Item i);
-    string currentResponse;
-};
 
 class Character
 {
@@ -140,7 +125,6 @@ class Character
 	 void setMaxHealth(int i);
 
 	public:
-	 Character();
 	 Character(string name, Inventory inv);
 	 string getName();
 	 void attack(Monster mon);
@@ -158,4 +142,22 @@ class Character
    void gotAWeapon();
 
 
+};
+
+
+
+class Store
+{
+  private:
+	 Weapon wepinventory[];
+     Potion potinventory[];
+
+  public:
+	Store();
+    void openStore(Character charactername, Inventory inventoryname);
+    void getWepInventory(Inventory inventoryname);
+    void getPotInventory(Inventory inventoryname);
+    void getCharInventory(Inventory inventoryname);
+    void buy(string itemnumber, int itemtype);
+    void sell(Character charactername, Inventory inventoryname, string itemname);
 };
