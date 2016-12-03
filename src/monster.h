@@ -29,23 +29,23 @@ Monster::Monster(int health, int attack, int x, string Name)
 	
 }
 
-int getAttack(){
+int Monster::getAttack(){
   return attack;
 }
 
-int getHealth(){
+int Monster::getHealth(){
   return health;
 }
 
-int getEscape(){
+int Monster::getEscape(){
   return escape;	
 }
 
-void decHealth(int attackPower){
+void Monster::decHealth(int attackPower){
 	this->health-=attackPower;
 }
 
-int ptak(int currHealth){
+int Monster::ptak(int currHealth){
  cout<<"Your current health is " << currHeath << " but not for long!" << endl;
  int canAttack = rand() % (5);
  if(canAttack==0) {
