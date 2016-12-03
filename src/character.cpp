@@ -15,7 +15,7 @@ using namespace std;
  //int currHealth;
  //int maxHealth;
 
- ///*offense is the sum of your level times 5 and the damage
+//offense is the sum of your level times 5 and the damage
 //of the weapon equipped */
  //int offense;
  //int gold;
@@ -90,10 +90,6 @@ string Character::getName()
 {
     return this->name;
 };
-
-void gotAWeapon() {
-  this->offense = offense + getWeapon();
-}
 
 
 bool Character::battle(Monster mon)
@@ -206,16 +202,15 @@ bool Character::checkIfDead(){
 
 void Character::heal()
 {
-  Potion potion = inv.usePotion();
-  if (potion == NULL) {
+  int recovPoints = inv.usePotion();
+  if (recovPoints == 0) {
     cout << "You don't have a potion, you impotent conglomeration of idiocy." << endl;
     return;
   }
-  int potionIndex = potion.recovPoints;
 
-  if (currHealth < maxHealth-potionIndex) {
-  this->currHealth += potionIndex;
-  cout << "You've been healed by " << potionIndex << " health points." << endl;
+  if (currHealth < maxHealth-recovPoints) {
+  this->currHealth += recovPoints;
+  cout << "You've been healed by " << recovPoints << " health points." << endl;
   }
   else {
     int arbNum = currHealth;
@@ -234,5 +229,4 @@ void Character::dispCharStats()
   cout << "offense: " << this->offense << endl;
   cout << "gold: " << this->gold << endl;
   inv.disInventory();
-
 }
