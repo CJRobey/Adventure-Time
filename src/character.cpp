@@ -22,21 +22,23 @@ of the weapon equipped */
  void setMaxHealth(int i);
 
 public:
+ Character();
  Character(string name, string type);
  string getName();
  void attack(Monster mon);
- void battle(Monster mon);
+ bool battle(Monster mon);
  void levelUp();
  void heal(int potionIndex);
  void checkIfDead();
  int getCurrHealth();
  int getGold();
- void decGold();
- void incGold();
+ void decGold(int i);
+ void incGold(int i);
+
 
 };
 
-void Character(string name, string type)
+Character(string name, string type)
 {
   this->name = name;
   this->type = type;
@@ -46,28 +48,27 @@ void Character(string name, string type)
   this->offense = offense + inv.getActiveWeapon().getDamage();
   this->gold = 0;
 
-  
   /*Other things that we need to do here:
   1. initialize the Inventory
   2. determine health, off, def, etc... which will all likely be a product
   of level*/
 }
 
-int getGold() {
+int Character::getGold() {
   return this->gold;
 }
 
 /*This will be used for selling items and obtaining gold*/
-void incGold(int i) {
+void Character::incGold(int i) {
   this->gold = gold + i;
 }
 
 /*the following will be used for buying items */
-void decGold(int i) {
+void Character::decGold(int i) {
   this->gold = gold - i;
 }
 
-void levelUp() {
+void Character::levelUp() {
   this->level++;
   setMaxHealth(maxHealth+5);
   incGold(100);
@@ -75,7 +76,7 @@ void levelUp() {
   this->offense = offense + 5;
 }
 
-void setMaxHealth(int i) {
+void Character::setMaxHealth(int i) {
   this->maxHealth = i;
 }
 
@@ -85,8 +86,11 @@ string Character::getName()
 };
 
 
-void Character::battle(Monster mon)
+bool Character::battle(Monster mon)
 {
+  bool deadness = false;
+  /*So here's the deal: we are going to return a bool that indicates whether or
+  not our character is dead at the end of the battle.*/
   /*combat algorithms need to be determined
   What kind of effect will defense, offense, and weapon type have on damage?
   Will we have accuracy of hits?
@@ -96,36 +100,66 @@ void Character::battle(Monster mon)
 
   while (true) {
 
-  cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
+    cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
 
-  int userIn;
-  cin >> userIn;
+    int userIn;
+    cin >> userIn;
 
-  switch(userIn) {
-    case 1:
+    switch(userIn) {
+      /*THIS METHOD IS NOT FINISHED
+      Need to account for cases in which the character dies*/
+
+      //choose to fight
+      case 1:
         attack(mon);
-        mon.ptak(*currHealth);
-    break;
-    case 2:
-      heal();
-      mon.ptak(*currHealth);
-    break;
-    case 3:
-    int v1 = rand() % 100;
+        if (mon.getHealth <= 0) {
+          cout << "The battle is over." << endl;
+          return;
+        }
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
+
+      //choose to heal self
+      case 2:
+        heal();
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
+
+      //choose to attempt to run
+      case 3:
+      int v1 = rand() % 100;
       if (v1 < 50) {
-      cout << "You managed to run away! " << endl;
-      return;
-    }
+        cout << "You managed to run away! " << endl;
+        return;
+      }
       else {
         cout << "Your character failed to run away." << endl;
-        mon.ptak(*currHealth);
-        break;
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
       }
-  }
+    }
   }
 }
 
-int Character::getCurrHealth {
+int Character::getCurrHealth() {
   return this->currHealth;
 }
 
@@ -138,12 +172,16 @@ void Character::attack(Monster mon)
   }
   else{
     mon.decHealth(attackPower);
+    if (mon.getHealth() <= 0) {
+      cout << "Your hit landed for " << attackPower << " damage points and killed the monster!" << endl;
+      return;
+    }
     cout << "The monster was hit for " << attackPower << " points." << endl;
-    cout << "The monster now has " mon.getHealh() " health points remainin.";
+    cout << "The monster now has " mon.getHealh() " health points remainin." << endl;
   }
 }
 
-void Character::decrementHealth(int damage){
+void decHealth(int damage){
   this->currHealth = currHealth - damage;
 }
 
@@ -173,6 +211,5 @@ else {
   this->currHealth = maxHealth;
   cout << "You've been healed by " << maxHealth - arbNum << " health points." << endl;
 }
-
 
 }
