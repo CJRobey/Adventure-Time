@@ -1,6 +1,7 @@
 
 #include "inventory.h" 
 #include "item.h"
+#include "AdventureTime.h"
 
 class Store {
   private:
@@ -10,6 +11,7 @@ class Store {
     Inventory getInventory();
     bool buy(Item i);
     int sell(Item i);
+    string print();
 };
 
 Store::Store(Inventory inventory) {
