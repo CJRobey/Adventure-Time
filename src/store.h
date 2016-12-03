@@ -128,6 +128,7 @@ void buy(string itemnumber, int itemtype)
       {
         charactername.decGold(wepinventory[itemnumber].getCost());
         inventoryname.add(wepinventory[itemnumber]);
+        cout << "That'll be "<<(wepinventory[itemnumber].getCost())<<" gold."
       }
     }
     case 2 :
@@ -136,6 +137,7 @@ void buy(string itemnumber, int itemtype)
       {
         charactername.decGold(potinventory[itemnumber].getCost());
         inventoryname.add(potinventory[itemnumber]);
+        cout << "That'll be "<<(potinventory[itemnumber].getCost())<<" gold."
       }
     }
   }
@@ -144,16 +146,17 @@ void buy(string itemnumber, int itemtype)
 
 void sell(itemname)
 {
-        charactername.incGold(inventoryname.drop(itemname));
+        int sellprice = charactername.incGold(inventoryname.drop(itemname));
+        cout << "I can give you "<<sellprice<<" gold for that."
 }
 
 string addwepdesc()
 {
-  String wepdescriptors[] = {"A magnificient ","A highly economical ","A flawless ", "An impressive ","An exceptional ", "An incredible value on this "};
+  String wepdescriptors[] = {"A deadly ","A magnificient ","A highly economical ","A flawless ", "An impressive ","An exceptional ", "An incredible value on this ","A ridiculously undervalued"};
   return wepdescriptors[rand() % sizeOf(wepdescriptors)];
 }
 string addpotdesc()
 {
-  String potdescriptors[] = {"A value-size ","A great-tasting ","A value-added ","A rock-bottom-priced ", "A great deal on this "};
+  String potdescriptors[] = {"A value-size ","A great-tasting ","A value-added ","A rock-bottom-priced ", "A great deal on this ","A refresing "};
   return wepdescriptors[rand() % sizeOf(potdescriptors)];
 }
