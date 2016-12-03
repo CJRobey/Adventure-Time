@@ -15,6 +15,7 @@ class Monster {
     int getAttack();
     int getHealth();
     int getName();
+    int getEscape();
     void decHealth(int attackPower);
     int ptak(int currHealth);
 };
@@ -34,6 +35,10 @@ int getAttack(){
 
 int getHealth(){
   return health;
+}
+
+int getEscape(){
+  return escape;	
 }
 
 void decHealth(int attackPower){
