@@ -1,23 +1,11 @@
 #include <iostream>
 #include <string>
 #include "AdventureTime.hxx"
+/*#include "Everydef.hxx" @andrew to run code replace adventuretime header with this include*/
+//TODO:KEEP DECLARATIONS IN ADVENTURETIME HEADER AND EVERYDEF UPDATED
 
-//class Store 
-//{
-  //private:
-	   //Weapon wepinventory[];
-     //Potion potinventory[];
-     
-  //public:
-    //void openStore();
-    //void getWepInventory();
-    //void getPotInventory();
-    //void getCharInventory();
-    //bool buy(int i);
-    //int sell(Item i);
-    //string currentResponse;
-//};
-
+//TODO:fix how your arrays are declared in the header files. You must define the length of arrays
+//TODO:fix arrays they are not defined correctly & you don't have quotes around your strings
 Store::Store(){
 	//this-> wepinventory = {Item(Weapon,5,3,Rusty_Fork),Item(Weapon,20,12,Dubious_Dagger),
     //Item(Weapon,50,30,Numchucks_of_Unending_Smiting),Item(Weapon,70,42,Absurdly_Sharp_Lance)
@@ -26,7 +14,7 @@ Store::Store(){
 	//this-> potinventory = {Item(Potion,10,6,Health_Potion)};	
 
 }
-void Store::openStore(Character hero)
+void Store::openStore(Character charactername, Inventory inventoryname)
 {
   string currentResponse = "";
   cout << "The shopkeeper asks you,\nWould you like to buy (1) or sell (2) today?\nOr if you've got no business here, I'll need to ask you to leave (3).\n(Please enter a number)";
