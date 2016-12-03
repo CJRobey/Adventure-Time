@@ -1,9 +1,10 @@
-<<<<<<< HEAD
+
 class Item {
   private:
     String type;
     int cost;
   public:
+    Item(String type, int cost);
     void setType(String type);
     void setCost(int cost);
     String getType();
@@ -117,4 +118,4 @@ class Potion  : public Item {
     int getHealing(){return this->healing;} //return healing value
 
 };
->>>>>>> origin/Tyler
+
