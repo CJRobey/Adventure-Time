@@ -227,5 +227,6 @@ void Character::dispCharStats()
   cout << "current health: " << this->currHealth << endl;
   cout << "offense: " << this->offense << endl;
   cout << "gold: " << this->gold << endl;
+  inv.disInventory();
 
 }
