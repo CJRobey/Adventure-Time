@@ -27,17 +27,17 @@ class Store
 void openStore(Character charactername, Inventory inventoryname)
 {
   
-  cout << "The shopkeeper asks you,\nWould you like to buy or sell today?\nOr if you've got no business here, I'll need to ask you to leave.\n(Please enter buy, sell, or leave)"
+  cout << "The shopkeeper asks you,\nWould you like to buy (1) or sell (2) today?\nOr if you've got no business here, I'll need to ask you to leave (3).\n(Please enter a number)"
   cin >> currentResponse;
-  if(currentResponse=="buy")
+  if(currentResponse=="1")
   {
-    cout << "Would you like to buy weapons or potions?\n(Please enter weapons or potions.)\n"
+    cout << "Would you like to buy weapons (1) or potions (2)?\n(Please enter a number)\n"
     cin >> currentResponse;
-    if(currentResponse=="weapons")
+    if(currentResponse=="1")
     {
       getWepInventory();
     }
-    else if(currentResponse=="potions")
+    else if(currentResponse=="2")
     {
       getPotInventory();
     }
@@ -46,11 +46,11 @@ void openStore(Character charactername, Inventory inventoryname)
       cout << "Not a valid input."
     }
   }
-  else if(currentResponse=="sell")
+  else if(currentResponse=="2")
   {
     getCharInventory();
   }
-  else if(currentResponse=="leave")
+  else if(currentResponse=="3")
   {
     "You leave the store."
   }
@@ -104,7 +104,7 @@ void getPotInventory()
   }
   else
   {
-    cout << "Not a valid input."
+    cout << "Not a valid input.";
     getPotInventory();
   }
   
@@ -128,7 +128,7 @@ void buy(string itemnumber, int itemtype)
       {
         charactername.decGold(wepinventory[itemnumber].getCost());
         inventoryname.add(wepinventory[itemnumber]);
-        cout << "That'll be "<<(wepinventory[itemnumber].getCost())<<" gold."
+        cout << "That'll be "<<(wepinventory[itemnumber].getCost())<<" gold.";
       }
     }
     case 2 :
@@ -137,7 +137,7 @@ void buy(string itemnumber, int itemtype)
       {
         charactername.decGold(potinventory[itemnumber].getCost());
         inventoryname.add(potinventory[itemnumber]);
-        cout << "That'll be "<<(potinventory[itemnumber].getCost())<<" gold."
+        cout << "That'll be "<<(potinventory[itemnumber].getCost())<<" gold.";
       }
     }
   }
@@ -147,7 +147,7 @@ void buy(string itemnumber, int itemtype)
 void sell(itemname)
 {
         int sellprice = charactername.incGold(inventoryname.drop(itemname));
-        cout << "I can give you "<<sellprice<<" gold for that."
+        cout << "I can give you "<<sellprice<<" gold for that.";
 }
 
 string addwepdesc()
