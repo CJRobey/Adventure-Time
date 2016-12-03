@@ -22,21 +22,23 @@ of the weapon equipped */
  void setMaxHealth(int i);
 
 public:
+ Character();
  Character(string name, string type);
  string getName();
  void attack(Monster mon);
- void battle(Monster mon);
+ bool battle(Monster mon);
  void levelUp();
  void heal(int potionIndex);
  void checkIfDead();
  int getCurrHealth();
  int getGold();
- void decGold();
- void incGold();
+ void decGold(int i);
+ void incGold(int i);
+
 
 };
 
-void Character(string name, string type)
+Character(string name, string type)
 {
   this->name = name;
   this->type = type;
@@ -52,21 +54,21 @@ void Character(string name, string type)
   of level*/
 }
 
-int getGold() {
+int Character::getGold() {
   return this->gold;
 }
 
 /*This will be used for selling items and obtaining gold*/
-void incGold(int i) {
+void Character::incGold(int i) {
   this->gold = gold + i;
 }
 
 /*the following will be used for buying items */
-void decGold(int i) {
+void Character::decGold(int i) {
   this->gold = gold - i;
 }
 
-void levelUp() {
+void Character::levelUp() {
   this->level++;
   setMaxHealth(maxHealth+5);
   incGold(100);
@@ -74,17 +76,17 @@ void levelUp() {
   this->offense = offense + 5;
 }
 
-void setMaxHealth(int i) {
+void Character::setMaxHealth(int i) {
   this->maxHealth = i;
 }
 
-string getName()
+string Character::getName()
 {
     return this->name;
 };
 
 
-bool battle(Monster mon)
+bool Character::battle(Monster mon)
 {
   bool deadness = false;
   /*So here's the deal: we are going to return a bool that indicates whether or
@@ -98,70 +100,70 @@ bool battle(Monster mon)
 
   while (true) {
 
-  cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
+    cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
 
-  int userIn;
-  cin >> userIn;
+    int userIn;
+    cin >> userIn;
 
-  switch(userIn) {
-    /*THIS METHOD IS NOT FINISHED
-    Need to account for cases in which the character dies*/
+    switch(userIn) {
+      /*THIS METHOD IS NOT FINISHED
+      Need to account for cases in which the character dies*/
 
-    //choose to fight
-    case 1:
-      attack(mon);
-      if (mon.getHealth <= 0) {
-        cout << "The battle is over." << endl;
+      //choose to fight
+      case 1:
+        attack(mon);
+        if (mon.getHealth <= 0) {
+          cout << "The battle is over." << endl;
+          return;
+        }
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
+
+      //choose to heal self
+      case 2:
+        heal();
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
+
+      //choose to attempt to run
+      case 3:
+      int v1 = rand() % 100;
+      if (v1 < 50) {
+        cout << "You managed to run away! " << endl;
         return;
       }
-      int damageAmount = mon.ptak(currHealth);
-      decHealth(damageAmount);
-      cout << "You have been hit for " << damageAmount << " points." << endl;
-      deadness = checkIfDead();
-      if (deadness == true) {
-        return deadness;
+      else {
+        cout << "Your character failed to run away." << endl;
+        int damageAmount = mon.ptak(currHealth);
+        decHealth(damageAmount);
+        cout << "You have been hit for " << damageAmount << " points." << endl;
+        deadness = checkIfDead();
+        if (deadness == true) {
+          return deadness;
+        }
+      break;
       }
-    break;
-
-    //choose to heal self
-    case 2:
-      heal();
-      int damageAmount = mon.ptak(currHealth);
-      decHealth(damageAmount);
-      cout << "You have been hit for " << damageAmount << " points." << endl;
-      deadness = checkIfDead();
-      if (deadness == true) {
-        return deadness;
-      }
-    break;
-
-    //choose to attempt to run
-    case 3:
-    int v1 = rand() % 100;
-    if (v1 < 50) {
-      cout << "You managed to run away! " << endl;
-      return;
     }
-    else {
-      cout << "Your character failed to run away." << endl;
-      int damageAmount = mon.ptak(currHealth);
-      decHealth(damageAmount);
-      cout << "You have been hit for " << damageAmount << " points." << endl;
-      deadness = checkIfDead();
-      if (deadness == true) {
-        return deadness;
-      }
-    break;
-    }
-  }
   }
 }
 
-int getCurrHealth {
+int Character::getCurrHealth() {
   return this->currHealth;
 }
 
-void attack(Monster mon)
+void Character::attack(Monster mon)
 {
   int attackPower = rand() % (offense + 1);
   if (attackPower == 0){
@@ -183,7 +185,7 @@ void decHealth(int damage){
   this->currHealth = currHealth - damage;
 }
 
-bool checkIfDead(){
+bool Character::checkIfDead(){
   if (currHealth <= 0){
     cout << "You've died in battle!\n*GAME OVER*" << endl;
     return true;
