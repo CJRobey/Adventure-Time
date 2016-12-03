@@ -89,7 +89,7 @@ class Inventory {
     }
 
     void drop(Potion P) {
-        usePotion(P.getName());
+        removePotion(P.getName());
     }
     void drop(Weapon W) {
         removeWeapon(W.getName());
@@ -102,7 +102,10 @@ class Inventory {
     }
 
     void addWeapon(string weaponName, Weapon W) {
-        if (Weapons.find(weaponName) != Weapons.end())
+        map<string,Weapon>::iterator iter;
+        iter = W.find(weaponName);
+        if (p != W.end())
+        //if (Weapons.find(weaponName) != Weapons.end())
             cout << "You already own that weapon!" << endl;
         else {
             Weapons[weaponName] = W;
@@ -111,7 +114,10 @@ class Inventory {
     }
 
     void removeWeapon(string weaponName) {
-        if (Weapons.find(weaponName) != Weapons.end())
+        map<string,Weapon>::iterator iter;
+        iter = W.find(weaponName);
+        if (p != W.end())
+        //if (Weapons.find(weaponName) != Weapons.end())
             cout << "You don't own that weapon!" << endl;
         else {
             Weapons.erase(weaponName);
@@ -120,11 +126,27 @@ class Inventory {
     }
 
     void addPotion(string potionName, Potion P) {
-        if (Potions.find(potionName) != Potions.end())
+                map<string,Weapon>::iterator iter;
+        iter = W.find(weaponName);
+        if (p != W.end())
+        //if (Potions.find(potionName) != Potions.end())
             cout << "You already own that potion!" << endl;
         else {
             Potions[potionName] = P;
             cout << potionName << " has been added!" << endl;
+        }
+    }
+
+    void removePotion(string potionName) {
+        if (Potions.find(potionName) != Potions.end())
+            cout << "You don't own that potion!" << endl;
+        else if (Potions[potionName].getAmount() > 1){
+            Potions[potionName].setAmount(Potions[potionName].getAmount() - 1);
+            cout << "1 " << potionName << " has been removed" << endl;
+        }
+        else {
+            Potions.erase(potionName);
+            cout << potionName << " has been removed." << endl;
         }
     }
 
