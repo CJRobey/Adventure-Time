@@ -1,45 +1,46 @@
 #include <string>
 #include <iostream>
 #include <cstdlib>
-#include "AdventureTime.h"
+#include "AdventureTime.hxx"
+
 
 using namespace std;
 
-class Character
-{
-private:
- string name;
- Inventory inv;
- int level;
- int currHealth;
- int maxHealth;
+//class Character
+//{
+//private:
+ //string name;
+ //Inventory inv;
+ //int level;
+ //int currHealth;
+ //int maxHealth;
 
- /*offense is the sum of your level times 5 and the damage
-of the weapon equipped */
- int offense;
- int gold;
- void setMaxHealth(int i);
+ ///*offense is the sum of your level times 5 and the damage
+//of the weapon equipped */
+ //int offense;
+ //int gold;
+ //void setMaxHealth(int i);
 
-public:
- Character();
- Character(string name, Inventory inv);
- string getName();
- void attack(Monster mon);
- bool battle(Monster mon);
- void levelUp();
- void heal(int potionIndex);
- void checkIfDead();
- int getCurrHealth();
- int getGold();
- void decGold(int i);
- void incGold(int i);
- void dispCharStats();
- void setOffense(int damage);
+//public:
+ //Character();
+ //Character(string name, Inventory inv);
+ //string getName();
+ //void attack(Monster mon);
+ //bool battle(Monster mon);
+ //void levelUp();
+ //void heal(int potionIndex);
+ //void checkIfDead();
+ //int getCurrHealth();
+ //int getGold();
+ //void decGold(int i);
+ //void incGold(int i);
+ //void dispCharStats();
+ //void setOffense(int damage);
 
 
-};
+//};
 
-Character(string name, Inventory inv)
+Character::Character(string name, Inventory inv)
 {
   this->name = name;
   this->level = 1;
@@ -90,6 +91,10 @@ string Character::getName()
     return this->name;
 };
 
+void gotAWeapon() {
+  this->offense = offense + getWeapon();
+}
+
 
 bool Character::battle(Monster mon)
 {
@@ -106,7 +111,7 @@ bool Character::battle(Monster mon)
   while (true) {
 
     cout << "1. Attack! \n2. Heal \n3. Run..." << endl;
-
+	int damageAmount;
     int userIn;
     cin >> userIn;
 
@@ -114,14 +119,15 @@ bool Character::battle(Monster mon)
       /*THIS METHOD IS NOT FINISHED
       Need to account for cases in which the character dies*/
 
+
       //choose to fight
       case 1:
         attack(mon);
-        if (mon.getHealth <= 0) {
+        if (mon.getHealth() <= 0) {
           cout << "The battle is over." << endl;
           return deadness;
         }
-        int damageAmount = mon.ptak(currHealth);
+        damageAmount = mon.ptak(currHealth);
         decHealth(damageAmount);
         cout << "You have been hit for " << damageAmount << " points." << endl;
         deadness = checkIfDead();
@@ -133,7 +139,7 @@ bool Character::battle(Monster mon)
       //choose to heal self
       case 2:
         heal();
-        int damageAmount = mon.ptak(currHealth);
+        damageAmount = mon.ptak(currHealth);
         decHealth(damageAmount);
         cout << "You have been hit for " << damageAmount << " points." << endl;
         deadness = checkIfDead();
@@ -145,7 +151,7 @@ bool Character::battle(Monster mon)
       //choose to attempt to run
       case 3:
       int v1 = rand() % 100;
-      if (v1 < mon.getEscapeChance()) {
+      if (v1 < mon.getEscape()) {
         cout << "You managed to run away! " << endl;
         return deadness;
       }
@@ -182,11 +188,11 @@ void Character::attack(Monster mon)
       return;
     }
     cout << "The monster was hit for " << attackPower << " points." << endl;
-    cout << "The monster now has " mon.getHealh() " health points remainin." << endl;
+    cout << "The monster now has " << mon.getHealth() << " health points remainin." << endl;
   }
 }
 
-void decHealth(int damage){
+void Character::decHealth(int damage){
   this->currHealth = currHealth - damage;
 }
 
@@ -198,7 +204,7 @@ bool Character::checkIfDead(){
   return false;
 }
 
-void Character::heal(Potion potion)
+void Character::heal()
 {
   Potion potion = inv.usePotion();
   if (potion == NULL) {
