@@ -43,7 +43,7 @@ void openStore(Character charactername, Inventory inventoryname)
     }
     else
     {
-      cout << "Not a valid input."
+      cout << "Not a valid input.";
     }
   }
   else if(currentResponse=="2")
@@ -52,11 +52,11 @@ void openStore(Character charactername, Inventory inventoryname)
   }
   else if(currentResponse=="3")
   {
-    "You leave the store."
+    "You leave the store.";
   }
   else
   {
-    cout << "Not a valid input."
+    cout << "Not a valid input.";
   }
   
 }
@@ -80,7 +80,7 @@ void getWepInventory()
    }
    else
    {
-     cout << "Not a valid input."
+     cout << "Not a valid input.";
      getWepInventory();
    }
 
@@ -92,7 +92,7 @@ void getPotInventory()
 	{
     cout << i+1 << ". " << addpotdesc() << getName(potinventory[i]) <<", capable of healing "<< getdamage(potinventory[i])<<" damage.\n";
 	}
-  cout << i+2 <<". Back to menu.\n(Please enter a number to choose)"
+  cout << i+2 <<". Back to menu.\n(Please enter a number to choose)";
   cin >> currentResponse;
   if(currentResponse >= 1 && currentResponse <= sizeOf(potinventory)+1)
   {
