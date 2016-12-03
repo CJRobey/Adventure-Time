@@ -27,8 +27,8 @@ of the weapon equipped */
 public:
  Character(string name, string type);
  string getName();
- void attack(Character opponent);
- void battle(Character opponent);
+ void attack(Monster mon);
+ void battle(Monster mon);
  void levelUp();
  void heal(int potionIndex);
  void checkIfDead();
@@ -53,7 +53,6 @@ Character::Character(string name, string type)
   2. determine health, off, def, etc... which will all likely be a product
   of level*/
 
-
 }
 
 void levelUp() {
@@ -75,10 +74,10 @@ string Character::getName()
 };
 
 
-void Character::battle(Character opponent)
+void Character::battle(Monster mon)
 {
   /*combat algorithms need to be determined
-  What kind of effect will defense, offense, and weapon type have on damange?
+  What kind of effect will defense, offense, and weapon type have on damage?
   Will we have accuracy of hits?
   Will we randomize damage within a certain range?*/
   cout << "You have entered into a battle!" << endl;
@@ -93,10 +92,12 @@ void Character::battle(Character opponent)
 
   switch(userIn) {
     case 1:
-        attack(opponent);
+        attack(mon);
+        mon.ptak(*currHealth);
     break;
     case 2:
       heal();
+      mon.ptak(*currHealth);
     break;
     case 3:
     int v1 = rand() % 100;
@@ -106,15 +107,18 @@ void Character::battle(Character opponent)
     }
       else {
         cout << "Your character failed to run away." << endl;
+        mon.ptak(*currHealth);
         break;
       }
   }
   }
 }
 
-int Character::getCurrHealth
+int Character::getCurrHealth {
+  return this->currHealth;
+}
 
-void Character::attack(Character opponent)
+void Character::attack(Monster mon)
 {
   int attackPower = rand() % (offense + 1);
   if (attackPower == 0){
@@ -122,18 +126,22 @@ void Character::attack(Character opponent)
     << endl;
   }
   else{
-    opponent.
+    mon.decHealth(attackPower);
+    cout << "The monster was hit for " << attackPower << " points." << endl;
+    cout << "The monster now has " mon.getHealh() " health points remainin.";
   }
 }
 
 void Character::decrementHealth(int damage){
-
+  this->currHealth = currHealth - damage;
 }
 
-void Character::checkIfDead(){
-  if (currHealth < 0){
+bool Character::checkIfDead(){
+  if (currHealth <= 0){
     cout << "You've died in battle!\n*GAME OVER*" << endl;
+    return true;
   }
+  return false;
 }
 
 void Character::heal(Potion potion)
