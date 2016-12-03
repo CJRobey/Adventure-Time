@@ -14,12 +14,15 @@ class Inventory {
 
   public:
     Inventory(){}
-    Inventory(map<string, Weapon> Weapons, map<string, Potion> Potions) {
-        this->Weapons = Weapons;
-        this->Potions = Potions;
-    }
+    void disInventory();
+    int drop(string itemName);
+    void add(Potion P);
+    void add(Weapon W);
+    int usePotion(string potionName);
+    int getWeapon();
+};
 
-    void disInventory(){
+    void Inventory::disInventory(){
         Weapon iteratedWeapon;
         Potion iteratedPotion;
         string name, damage, worth, spaces, cost, healing, amount= "";
@@ -88,48 +91,34 @@ class Inventory {
         cout << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
     }
 
-    void drop(Potion P) {
-        removePotion(P.getName());
-    }
-    void drop(Weapon W) {
-        removeWeapon(W.getName());
-    }
-    void add(Potion P) {
-        addPotion(P.getName(),P);
-    }
-    void add(Weapon W) {
-        addWeapon(W.getName(),W);
-    }
-
-    void addWeapon(string weaponName, Weapon W) {
-        map<string,Weapon>::iterator iter;
-        iter = W.find(weaponName);
-        if (p != W.end())
-        //if (Weapons.find(weaponName) != Weapons.end())
-            cout << "You already own that weapon!" << endl;
-        else {
-            Weapons[weaponName] = W;
-            cout << weaponName << " has been added!" << endl;
+    int Inventory::drop(string itemName) {
+        int worth;
+        if (Weapons.count(itemName)) {
+            worth = Weapons[itemName].getWorth();
+            Weapons.erase(itemName);
+            cout << itemName << " has been removed." << endl;
         }
-    }
-
-    void removeWeapon(string weaponName) {
-        map<string,Weapon>::iterator iter;
-        iter = W.find(weaponName);
-        if (p != W.end())
-        //if (Weapons.find(weaponName) != Weapons.end())
-            cout << "You don't own that weapon!" << endl;
-        else {
-            Weapons.erase(weaponName);
-            cout << weaponName << " has been removed." << endl;
+        else if (Potions.count(itemName)) {
+            worth = Potions[itemName].getWorth();
+            if (Potions[itemName].getAmount() > 1){
+            Potions[itemName].setAmount(Potions[itemName].getAmount() - 1);
+            cout << "1 " << itemName << " has been removed" << endl;
+            }
+            else {
+                Potions.erase(itemName);
+                cout << itemName << " has been removed." << endl;
+            }
         }
+        else {
+            cout << "You don't own that item!" << endl;
+            worth = 0;
+        }
+        return worth;
     }
 
-    void addPotion(string potionName, Potion P) {
-                map<string,Weapon>::iterator iter;
-        iter = W.find(weaponName);
-        if (p != W.end())
-        //if (Potions.find(potionName) != Potions.end())
+    void Inventory::add(Potion P) {
+        string potionName = P.getName();
+        if (Potions.count(potionName))
             cout << "You already own that potion!" << endl;
         else {
             Potions[potionName] = P;
@@ -137,28 +126,45 @@ class Inventory {
         }
     }
 
-    void removePotion(string potionName) {
-        if (Potions.find(potionName) != Potions.end())
+    void Inventory::add(Weapon W) {
+        string weaponName = W.getName();
+        if (Weapons.count(weaponName))
+            cout << "You already own that weapon!" << endl;
+        else {
+            Weapons[weaponName] = W;
+            cout << weaponName << " has been added!" << endl;
+        }
+    }
+
+    int Inventory::usePotion(string potionName) {
+        Potion P;
+        int healing;
+        if (!Potions.count(potionName))
             cout << "You don't own that potion!" << endl;
         else if (Potions[potionName].getAmount() > 1){
+            P = Potions[potionName];
+            healing = P.getHealing();
             Potions[potionName].setAmount(Potions[potionName].getAmount() - 1);
             cout << "1 " << potionName << " has been removed" << endl;
         }
         else {
-            Potions.erase(potionName);
-            cout << potionName << " has been removed." << endl;
+                P = Potions[potionName];
+                healing = P.getHealing();
+                Potions.erase(potionName);
+                cout << potionName << " has been removed." << endl;
         }
+        return healing;
     }
 
-    Potion usePotion(string potionName) {
-        Potion P;
-        if (Potions.find(potionName) != Potions.end())
-            cout << "You don't own that potion!" << endl;
-        else {
-            P = Potions[potionName];
-            Potions.erase(potionName);
-            cout << potionName << " has been removed!" << endl;
+    int Inventory::getWeapon() {
+        Weapon currentWeapon;
+        Weapon strongestWeapon;
+        int maxDamage = 0;
+        for(map<string, Weapon>::iterator iter = Weapons.begin(); iter != Weapons.end(); ++iter) {
+            currentWeapon = Weapons[iter->first];
+            if (currentWeapon.getDamage() > maxDamage) {
+                maxDamage = currentWeapon.getDamage();
+            }
+            return maxDamage;
         }
-        return P;
     }
-};
