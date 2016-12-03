@@ -16,12 +16,12 @@ class Store
     void getWepInventory();
     void getPotInventory();
     void getCharInventory();
-    bool buy(int i);
+    void buy(string itemnumber, int itemtype);
     int sell(Item i);
     string currentResponse;
 };
 
-void openStore(Character charactername)
+void openStore(Character charactername, Inventory inventoryname)
 {
   
   cout << "The shopkeeper asks you,\nWould you like to buy or sell today?\nOr if you've got no business here, I'll need to ask you to leave.\n(Please enter buy, sell, or leave)"
@@ -69,11 +69,11 @@ void getWepInventory()
    cin >> currentResponse;
    if(currentResponse >= 1 && currentResponse <= sizeOf(wepinventory)+1)
    {
-     buy(currentResponse, "weapon")
+     buy(currentResponse, 1);
    }
    else if(currentResponse == sizeOf(wepinventory)+2)
    {
-     openStore(charactername)
+     openStore(charactername);
    }
    else
    {
@@ -92,11 +92,11 @@ void getPotInventory()
   cin >> currentResponse;
   if(currentResponse >= 1 && currentResponse <= sizeOf(potinventory)+1)
   {
-    buy(currentResponse, "potion")
+    buy(currentResponse, 2);
   }
   else if(currentResponse == sizeOf(potinventory)+2)
   {
-    openStore(charactername)
+    openStore(charactername);
   }
   else
   {
@@ -113,17 +113,28 @@ void getCharInventory()
 //Character can call only if they have enough money.
 //Inventory item should check if item is in the store
 
-bool buy(string& itemnumber, string& itemtype)
+void buy(string itemnumber, int itemtype)
 {
-  if(charactername.getGold()>=)
+  switch(itemtype)
   {
-    
+    case 1 :
+    {
+      if(charactername.getGold() >= wepinventory[itemnumber].getCost())
+      {
+        charactername.decGold(wepinventory[itemnumber].getCost());
+        inventoryname.add(wepinventory[itemnumber]);
+      }
+    }
+    case 2 :
+    {
+      if(charactername.getGold() >= potinventory[itemnumber].getCost())
+      {
+        charactername.decGold(potinventory[itemnumber].getCost());
+        inventoryname.add(potinventory[itemnumber]);
+      }
+    }
   }
-
   
-  {
-    return false;
-  }
 }
 
 int sell(int i)
