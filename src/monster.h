@@ -5,12 +5,13 @@
 
 class Monster {
   private:
-	string name;
+    string name;
     int attack;
     int health;
-    Item* items = new Item[10];
+    int escape;
     
   public:
+    Monster(int health, int attack, int x, string Name);
     int getAttack();
     int getHealth();
     int getName();
@@ -18,11 +19,13 @@ class Monster {
     int ptak(int currHealth);
 };
 
-Monster::Monster(int health, int attack, string Name)
+Monster::Monster(int health, int attack, int x, string Name)
 {
 	this->health=health;
 	this->attack=attack;
 	this->name=name;
+	this->escape=escape;
+	
 }
 
 int getAttack(){
