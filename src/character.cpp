@@ -39,7 +39,6 @@ using namespace std;
 
 
 //};
-
 Character::Character(string name, Inventory inv)
 {
   this->name = name;
@@ -90,6 +89,11 @@ string Character::getName()
 {
     return this->name;
 };
+
+//@caleb this getWeapon isn't defined look at this
+//void Character::gotAWeapon() {
+  //this->offense = this->offense + getWeapon();
+//}
 
 
 bool Character::battle(Monster mon)
@@ -229,4 +233,5 @@ void Character::dispCharStats()
   cout << "offense: " << this->offense << endl;
   cout << "gold: " << this->gold << endl;
   inv.disInventory();
+
 }
