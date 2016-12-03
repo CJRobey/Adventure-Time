@@ -107,11 +107,11 @@ void getPotInventory()
 
 void getCharInventory()
 {
-  cout << "What would you like to sell?";
+  cout << "What would you like to sell? (Please enter the name of the item)\n";
+  charactername.disInventory();
+  cin >> currentResponse;
+  sell(currentResponse);
 }
-
-//Character can call only if they have enough money.
-//Inventory item should check if item is in the store
 
 void buy(string itemnumber, int itemtype)
 {
@@ -137,7 +137,7 @@ void buy(string itemnumber, int itemtype)
   
 }
 
-int sell(int i)
+void sell(itemname)
 {
-  return i.getCost();
+        charactername.incGold(inventoryname.drop(itemname));
 }
