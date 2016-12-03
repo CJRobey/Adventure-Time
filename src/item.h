@@ -83,3 +83,4 @@ class Potion  : public Item {
     int getHealing(){return this->healing;} //return healing value
 
 };
+
