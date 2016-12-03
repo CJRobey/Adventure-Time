@@ -10,21 +10,27 @@ class Inventory {
 
   private:
     map<string, Weapon> Weapons;
-    map<string, Potion> Potions;
+    Potion P;
 
   public:
     Inventory(){}
     void disInventory();
     int drop(string itemName);
-    void add(Potion P);
-    void add(Weapon W);
-    int usePotion(string potionName);
+    void addPotion(int amount);
+    void addWeapon(Weapon W);
+    int usePotion();
     int getWeapon();
+    void setPotionAmount(int amount);
+    void setPotionHealing(int healing);
+    void setPotionCost(int cost);
+    void setPotionName(string name);
+    int getPotionAmount();
+    int getPotionHealing();
+
 };
 
     void Inventory::disInventory(){
         Weapon iteratedWeapon;
-        Potion iteratedPotion;
         string name, damage, worth, spaces, cost, healing, amount= "";
         int length,attribute;
         stringstream ss;
@@ -55,38 +61,35 @@ class Inventory {
             cout << worth << endl;
         }
         cout << endl;
-        cout << "\tPotion         Healing   Price     Worth     Amount" << endl;
-        for(map<string, Potion>::iterator iter2 = Potions.begin(); iter2 != Potions.end(); ++iter2) {
-            iteratedPotion = Potions[iter2->first];
-            name = iteratedPotion.getName();
+        cout << "\tName         Healing   Price     Worth     Amount" << endl;
+            name = P.getName();
             //cout << "Name is " << name << endl;
             length = name.length();
             //cout << "Length of name is " << length << endl;
             cout << "\t" << name << spaces.substr(0,15-length);
-            attribute = iteratedPotion.getHealing();
+            attribute = P.getHealing();
             ss << attribute;
             healing = ss.str();
             ss.str("");
             length = healing.length();
             cout << healing << spaces.substr(0,10-length);
-            attribute = iteratedPotion.getCost();
+            attribute = P.getCost();
             ss << attribute;
             cost = ss.str();
             ss.str("");
             length = cost.length();
             cout << cost << spaces.substr(0,10-length);
-            attribute = iteratedPotion.getWorth();
+            attribute = P.getWorth();
             ss << attribute;
             worth = ss.str();
             ss.str("");
             length = worth.length();
             cout << worth << spaces.substr(0,10-length);
-            attribute = iteratedPotion.getAmount();
+            attribute = P.getAmount();
             ss << attribute;
             amount = ss.str();
             ss.str("");
             cout << amount << endl;
-        }
         cout << endl;
         cout << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
     }
@@ -98,15 +101,15 @@ class Inventory {
             Weapons.erase(itemName);
             cout << itemName << " has been removed." << endl;
         }
-        else if (Potions.count(itemName)) {
-            worth = Potions[itemName].getWorth();
-            if (Potions[itemName].getAmount() > 1){
-            Potions[itemName].setAmount(Potions[itemName].getAmount() - 1);
-            cout << "1 " << itemName << " has been removed" << endl;
+
+        else if (!itemName.compare(P.getName())) {
+            if (P.getAmount() > 1) {
+                P.setAmount(P.getAmount()-1);
+                worth = P.getWorth();
             }
             else {
-                Potions.erase(itemName);
-                cout << itemName << " has been removed." << endl;
+                cout << "You do not own enough potion!" << endl;
+                worth = 0;
             }
         }
         else {
@@ -116,17 +119,11 @@ class Inventory {
         return worth;
     }
 
-    void Inventory::add(Potion P) {
-        string potionName = P.getName();
-        if (Potions.count(potionName))
-            cout << "You already own that potion!" << endl;
-        else {
-            Potions[potionName] = P;
-            cout << potionName << " has been added!" << endl;
-        }
+    void Inventory::addPotion(int amount) {
+        P.setAmount(P.getAmount()+amount);
     }
 
-    void Inventory::add(Weapon W) {
+    void Inventory::addWeapon(Weapon W) {
         string weaponName = W.getName();
         if (Weapons.count(weaponName))
             cout << "You already own that weapon!" << endl;
@@ -136,22 +133,15 @@ class Inventory {
         }
     }
 
-    int Inventory::usePotion(string potionName) {
-        Potion P;
+    int Inventory::usePotion() {
         int healing;
-        if (!Potions.count(potionName))
-            cout << "You don't own that potion!" << endl;
-        else if (Potions[potionName].getAmount() > 1){
-            P = Potions[potionName];
+        if(P.getAmount() > 0) {
+            P.setAmount(P.getAmount()-1);
             healing = P.getHealing();
-            Potions[potionName].setAmount(Potions[potionName].getAmount() - 1);
-            cout << "1 " << potionName << " has been removed" << endl;
         }
         else {
-                P = Potions[potionName];
-                healing = P.getHealing();
-                Potions.erase(potionName);
-                cout << potionName << " has been removed." << endl;
+            healing = 0;
+            cout << "You do not own enough potion!" << endl;
         }
         return healing;
     }
@@ -168,3 +158,15 @@ class Inventory {
             return maxDamage;
         }
     }
+
+    void Inventory::setPotionHealing(int healing) {P.setHealing(healing);} //set healing value
+
+    void Inventory::setPotionAmount(int amount) {P.setAmount(amount);} //set amount of potions
+
+    void Inventory::setPotionCost(int cost) {P.setCost(cost);}
+
+    void Inventory::setPotionName(string name) {P.setName(name);}
+
+    int Inventory::getPotionAmount() {return P.getAmount();} //returns amount of a specific potion
+
+    int Inventory::getPotionHealing(){return P.getHealing();} //return healing value
