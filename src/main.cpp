@@ -42,11 +42,11 @@ int main () {
             }
             if(pChoice == 3){
 
-                if (chance(50) == true){
+                if (chance(50)){
                     cout << plot.text[5];
                     Character.incGold(750);
                 }
-                if (chance(50) == false){
+                else {
                     cout << plot.text[6]
                     Character.incGold(500);
                 }
