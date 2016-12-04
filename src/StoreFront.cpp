@@ -61,7 +61,7 @@ void Store::openStore() {
     string resp;
     cout << "Would you like to buy weapons or potions?\n(Please enter weapons or potions.)\n";
     cin >> resp;
-    wait(2);
+    wait(1);
     cout << endl;
     if(resp=="weapons")  {
       getWepInventory();

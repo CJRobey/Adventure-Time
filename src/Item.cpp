@@ -46,7 +46,7 @@ class Weapon  : public Item {
     Weapon(){ //default constructor must initialize the type of item
       this->type = "Weapon";
     }
-    Weapon( int cost, int worth, string name, int damage) {  //second constructor must also initialize type
+    Weapon(int cost, int worth, string name, int damage) {  //second constructor must also initialize type
       this->damage = damage;
       this->type = "Weapon";
       this->name = name;

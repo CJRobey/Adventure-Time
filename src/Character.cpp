@@ -41,7 +41,7 @@ public:
  void incOffense(int damage);
  void decHealth(int i);
  void incHealth(int i);
- map<string, Weapon> getWepInventory();
+ map<string, Weapon>* getWepInventory();
  void setInventory();
  Inventory getInv();
  void addInvWeapon(Weapon w);
@@ -66,7 +66,6 @@ Character::Character(string name, Inventory &inv)
   /*Potion healing will also be determined by the amount of total health points*/
   inv.setPotionCost(20);
   inv.setPotionHealing(10);
-  inv.setPotionWorth(12);
 
 }
 
@@ -79,11 +78,9 @@ void Character::levelUp() {
   /*Potion healing will also be determined by the amount of total health points*/
 
   //this will raise the potion's cost at stores
-  inv.setPotionCost(inv.getPotion().getCost() + 20);
+  inv.setPotionCost(inv.getPotCost() + 20);
   //this will change its healing ability to 1/2 + 1 of the user's max health
   inv.setPotionHealing(((int) maxHealth * 0.5)+1);
-  //this will set the selling price to 6/10 of the buying price.
-  inv.setPotionWorth((int) inv.getPotion().getCost() * 0.6);
 
   this->offense = offense + 5;
 
@@ -285,7 +282,7 @@ void Character::dispCharStats()
 
 }
 
-map<string, Weapon> Character::getWepInventory() {
+map<string, Weapon>* Character::getWepInventory() {
   return this->inv.getWeaponMap();
 }
 
@@ -302,7 +299,7 @@ int Character::addPotionToInv() {
   }
   else {
   inv.addPotion();
-  return inv.getPotion().getCost();
+  return inv.getPotCost();
   }
 
 }

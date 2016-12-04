@@ -25,14 +25,14 @@ class Inventory {
     void setPotionAmount(int amount);
     void setPotionHealing(int healing);
     void setPotionCost(int cost);
-    void setPotionWorth(int worth);
     int getPotionCost();
     int getPotionHealing();
     bool isElemOfWeap(string s);
-    map<string, Weapon> getWeaponMap();
+    map<string, Weapon>* getWeaponMap();
     int getPotCount();
     Potion getPotion();
     int sellPotion();
+    int getPotCost();
 
 };
 
@@ -44,6 +44,11 @@ Inventory::Inventory() {
 }
 
 
+int Inventory::getPotCost() {
+  return P.getCost();
+}
+
+
 int Inventory::sellPotion() {
   if(potCount > 0) {
   this->potCount--;
@@ -52,7 +57,7 @@ int Inventory::sellPotion() {
   else {
     cout << "You don't have any potions to sell" << endl;
   }
-  return P.getCost();
+  return P.getWorth();
 
 }
 
@@ -64,8 +69,8 @@ int Inventory::getPotCount() {
   return potCount;
 }
 
-map<string, Weapon> Inventory::getWeaponMap() {
-  return this->Weapons;
+map<string, Weapon>* Inventory::getWeaponMap() {
+  return &Weapons;
 }
 
 
@@ -200,7 +205,7 @@ map<string, Weapon> Inventory::getWeaponMap() {
     }
 
     bool Inventory::isElemOfWeap(string s) {
-      if (Weapons.count(s)) {
+      if (Weapons.count(s) == 1) {
         return true;
       }
       else return false;
@@ -212,7 +217,3 @@ map<string, Weapon> Inventory::getWeaponMap() {
     void Inventory::setPotionCost(int cost) {P.setCost(cost);}
 
     int Inventory::getPotionHealing(){return P.getHealing();} //return healing value
-
-    void Inventory::setPotionWorth(int i) {
-      P.setWorth(i);
-    }

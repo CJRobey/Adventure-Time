@@ -5,7 +5,9 @@
 using namespace std;
 int main () {
 	int i=1;
+
 	Inventory inv = Inventory();
+	inv.disInventory();
 
 	string name = "Hero";
 	Character *c = new Character(name, inv);
