@@ -304,6 +304,7 @@ int Character::remInvWeapon(string item) {
 int Character::addPotionToInv() {
 
   if (inv.getPotCount() > 9) {
+    cout << "Your potion inventory is full! You can't buy any more potions." << endl;
     return 0;
   }
   else {
