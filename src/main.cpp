@@ -9,7 +9,7 @@
 
 using namespace std;
 
-bool chance(int luck) {
+bool chance(int luck) { //this function returns a boolean based on a given chance
 
 	if ((rand() * 100) < luck) {
 		return true;
@@ -17,7 +17,7 @@ bool chance(int luck) {
 	else return false;
 }
 
-void getFileContents (string fileName)
+void getFileContents (string fileName) //this function is used to display the ascii text
 {
 		ifstream Reader (fileName);             //Open file
 		string Lines = "";        //All lines
@@ -34,7 +34,7 @@ void getFileContents (string fileName)
 		}
 }
 
-int input(int choices, Character *c) {
+int input(int choices, Character *c) { //this function makes sure that the input is valid and displays character info
 	int pChoice;
 	while (true) {
 		cout << "\n";
@@ -58,7 +58,7 @@ int input(int choices, Character *c) {
 	}
 }
 
-bool Death(Character *character) {
+bool Death(Character *character) { //handles the option to quit if the character dies
 	cout<<"Do you want to continue?\n\t1: Yes\n\t2: No\n";
 	int pChoice = input(2,character);
 	if (pChoice==1) {
@@ -94,7 +94,8 @@ int main () {
 	cout<<"\nWhat is your name?\n";
 	cin>>pName;
 	Character *character = new Character(pName, i);
-	if (pName==";") {
+	
+	if (pName==";") { //creates developer mode
 		cout << "ur a dev.\n";
 		pName=="SuperDev";
 		character->setMaxHealth(50000);
@@ -102,9 +103,19 @@ int main () {
 		character->incOffense(50000);
 		character->incGold(50000);
 	}
-	while (!end) {
-	switch (save) {
+	cout<<"Demo Mode?\n1: Yes\n2: No";
+	pChoice=input(2,character);
+	if (pChoice==1) { //enters demo mode
+		save=5;	
+	}
+	while (!end) { //encompassing while statement runs the code until the game ends
+	switch (save) {//switch statement allows for save points
 
+			/*We used if and nested if statements to build the plotline. In order
+to make main more manageable, we used the serperate class plot to keep
+track of the storyline strings*/
+					
+			
 	case (1): {
 		cout << plot.text[0] << plot.text[1];
 
@@ -177,7 +188,7 @@ int main () {
 	pChoice = input(2,character);
 
 	if(pChoice == 1){
-		mon = Monster(40,10,90,"Wolves");
+		mon = Monster(40,10,90,"Wolves");//fight wolves
 		battRes=character->battle(mon);
 		if (battRes==2) {
 			if (!Death(character)) {
@@ -205,7 +216,7 @@ int main () {
 			pChoice = input(3,character);
 
 			if(pChoice == 1){
-				mon = Monster(50,15,80,"Bandits");
+				mon = Monster(50,15,80,"Bandits");//fight bandits
 				battRes = character->battle(mon);
 				if (battRes==0) {
 				cout << plot.text[24];
@@ -219,7 +230,7 @@ int main () {
 
 			if(pChoice == 2){
 				if(chance(40) == true){
-					mon = Monster(40,10,80,"Bandits");
+					mon = Monster(40,10,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
 						cout << plot.text[24];
@@ -231,7 +242,7 @@ int main () {
 				}
 				}
 				else {
-					mon = Monster(50,15,80,"Bandits");
+					mon = Monster(50,15,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
 						cout << plot.text[24];
@@ -249,7 +260,7 @@ int main () {
 					cout << plot.text[25];
 				}
 				if(chance(60) == false){
-					mon = Monster(50,15,80,"Bandits");
+					mon = Monster(50,15,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
 						cout << plot.text[24];
@@ -267,17 +278,16 @@ int main () {
 	}
 	cout<<plot.text[26];
 	}
-	/////////////////////////////////////////////////////////////
+
 	case (2): {
 		save=2;
 		cout<<plot.text[27];
 		pChoice = input(2,character);
-//Fall and hit your head
+
 		if (pChoice==1) {
 			cout<<plot.text[28];
 			character->incHealth(20);
-			character->decHealth(10);
-			mon = Monster(50,30,90,"Goblins");
+			mon = Monster(50,30,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
 					if (!Death(character)) {
@@ -289,7 +299,7 @@ int main () {
 		}
 		if (pChoice==2) {
 			cout<<plot.text[29];
-			mon = Monster(40,20,90,"Goblins");
+			mon = Monster(40,20,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
 					if (!Death(character)) {
@@ -302,7 +312,7 @@ int main () {
 		cout<<plot.text[31];
 		pChoice = input(2,character);
 		while (pChoice!=2) {
-			mon = Monster(40,20,90,"Goblins");
+			mon = Monster(40,20,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
 					if (!Death(character)) {
@@ -345,6 +355,8 @@ int main () {
 			if (numCorrect>=2) {
 				cout<<plot.text[40];
 				cout<<plot.text[41];
+				character.incGold(200);
+				helped++;
 			}
 		}
 		cout<<plot.text[42];
@@ -376,9 +388,8 @@ int main () {
 			}
 			if (pChoice==3) {
 				cout<<plot.text[49];
-				character->decHealth(10);
 				getFileContents("Driver.txt");
-				mon = Monster(200,30,50,"Carriage Driver");
+				mon = Monster(200,30,50,"Carriage Driver");//fight carriage driver
 				battRes = character->battle(mon);
 				if (battRes==2) {
 					if (!Death(character)) {
@@ -407,7 +418,7 @@ int main () {
 
 
 	}
-	//////////////////////////////////////////////////////////////////////////
+	
 	case (3): {
 		save=3;
 		pChoice = 0;
@@ -425,10 +436,10 @@ int main () {
 					if(pChoice == 1){
 						if(chance(50) == true){
 							cout << plot.text[60];
+							helped++;
 						}
 						else{
 							cout << plot.text[61];
-							character->decHealth(5);
 						}
 					}
 					if(pChoice == 2){
@@ -477,7 +488,7 @@ int main () {
 			if(pChoice == 1 || pChoice == 2){
 				if(pChoice == 1){
 					cout << plot.text[75];
-					mon = Monster(250,40,50,"Thieves");
+					mon = Monster(250,40,50,"Thieves");//fight thieves
 					battRes=character->battle(mon);
 					if (battRes==2) {
 								if (!Death(character)) {
@@ -490,7 +501,7 @@ int main () {
 					cout << plot.text[76];
 					pChoice = input(2,character);
 					if(pChoice == 1){
-						mon = Monster(240,30,50,"Thieves");
+						mon = Monster(240,30,50,"Thieves");//fight thievs
 						battRes=character->battle(mon);
 						if (battRes==2) {
 									if (!Death(character)) {
@@ -501,7 +512,7 @@ int main () {
 					}
 					if(pChoice == 2){
 						cout << plot.text[77];
-						mon = Monster(250,40,50,"Thieves");
+						mon = Monster(250,40,50,"Thieves");//fight thieves
 						battRes=character->battle(mon);
 						if (battRes==2) {
 									if (!Death(character)) {
@@ -532,6 +543,7 @@ int main () {
 						}
 						else{
 							cout << plot.text[81];
+							helped+=2;
 							rightRoom = true;
 						}
 					}
@@ -583,7 +595,7 @@ int main () {
 		save=4;
 		cout<<plot.text[90];
 		cout<<plot.text[91];
-		mon = Monster(400,50,40,"Fire Mage");
+		mon = Monster(400,50,40,"Fire Mage");//fight fire mage
 		battRes=character->battle(mon);
 		if (battRes==2) {
 					if (!Death(character)) {
@@ -602,7 +614,7 @@ int main () {
 		if (pChoice==2) {
 			cout<<plot.text[96];
 		}
-		mon = Monster(400,60,40,"Ice Mage");
+		mon = Monster(400,60,40,"Ice Mage");//fight ice mage
 		battRes=character->battle(mon);
 		if (battRes==2) {
 					if (!Death(character)) {
@@ -615,7 +627,7 @@ int main () {
 		pChoice=input(2,character);
 		if ((pChoice==1&&chance(50))||pChoice==2) {
 			cout<<plot.text[98];
-			mon = Monster(400,70,40,"Storm Mage");
+			mon = Monster(400,70,40,"Storm Mage");//fight storm mage
 			battRes=character->battle(mon);
 			if (battRes==2) {
 					if (!Death(character)) {
@@ -660,7 +672,7 @@ int main () {
 			}
 			cout<<plot.text[106];
 			getFileContents("Dragon.txt");
-			mon = Monster(2000,80,0,"Dragon");
+			mon = Monster(2000,80,0,"Dragon");//fight dragon
 			battRes=character->battle(mon);
 			if (battRes==2) {
 					if (!Death(character)) {
@@ -673,6 +685,7 @@ int main () {
 			pChoice = input(2,character);
 			if (pChoice==1) {
 				cout<<plot.text[109];
+				helped++;
 			}
 			if (pChoice==2) {
 				cout<<plot.text[110];
@@ -683,7 +696,7 @@ int main () {
 			if (helped==7) {
 				cout<<plot.text[113];
 				cout<<plot.text[114];
-				mon = Monster(1,0,0,"King");
+				mon = Monster(1,0,0,"King");//fight king
 				battRes=character->battle(mon);
 				cout<<plot.text[115];
 				cout<<plot.text[116];
@@ -705,7 +718,7 @@ int main () {
 			}
 			if (pChoice==2&&helped!=7) {
 				cout<<plot.text[122];
-				mon = Monster(300,50,0,"Guards");
+				mon = Monster(300,50,0,"Guards");//fight guards
 				battRes=character->battle(mon);
 				if (battRes==2) {
 						if (!Death(character)) {
@@ -720,8 +733,28 @@ int main () {
 		}
 		end=true;
 	}
-	case 5: {
-		break;
+	case 5: { //used for end of game and demo mode
+		pChoice=0;
+		while (pChoice!=1) {
+			cout<<"1: Quit\n2: Fight\n3: use store\n4:";
+			pChoice=input(3, character);
+			if (pChoice==1) {
+				break;
+			}
+			if (pChoice==2) {
+				mon = Monster(100,100,100,"Monster");//fight random monster
+				battRes=character->battle(mon);
+				if (battRes==2) {
+						if (!Death(character)) {
+							save = 0;
+						}
+						break;
+					}
+			}
+			if (pChoice==3) {
+				Store *s = new Store(*character);
+				while(s->openStore());		
+			}
 	}
 	}
 }
