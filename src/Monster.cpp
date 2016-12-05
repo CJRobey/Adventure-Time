@@ -12,7 +12,7 @@ class Monster {
     int escape;
 
   public:
-    Monster();
+    //Monster();
     Monster(int health, int attack, int x, string Name);
     int getAttack();
     int getHealth();
@@ -56,7 +56,7 @@ int Monster::ptak(int currHealth){
 	return 0;
  }
  else{
-  cout<<"Your current health is " << (currHealth-attack) << " but not for long!" << endl;
+  cout<<"Your current health is " << (currHealth-attack) << " because ";
 	return attack;
  }
 }

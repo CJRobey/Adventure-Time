@@ -76,7 +76,7 @@ class Potion  : public Item {
     Potion(int healing) {  //second constructor must also initialize type
       this->healing = healing;
       this->type = "Potion";
-      this->cost = 20;
+      this->cost = 30;
     }
 
     void setHealing(int healing) {this->healing = healing;} //set healing value

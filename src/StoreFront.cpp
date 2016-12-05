@@ -22,8 +22,10 @@ class Store
   private:
 
     //the constructor of Weapon is (buying Price, selling price, name, and damage)
-	   Weapon wepInventory [5] = {Weapon(5,3,"Rusty_Spork",50), Weapon(20,12,"Dubious_Dagger",70), Weapon(50,30,"Nunchucks_of_Unending_Smiting",100),
-   Weapon(70,42,"Absurdly_Sharp_Lance",200), Weapon(300,180,"Blade_of_Eternal_Gods",300)} ;
+	   Weapon wepInventory [16] = {Weapon(180,108,"Swiss_Army_Rock",10), Weapon(210,126,"Rusty_Spork",15), Weapon(240,144,"Dubious_Dagger",20), Weapon(270,162,"Mediocre_Spear",25), Weapon(470,282,"Brutal_Maul",40),
+     Weapon(500,300,"Undertakers_Cleaver",50), Weapon(530,318,"Nunchucks_of_Unending_Smiting",60), Weapon(560,336,"Absurdly_Sharp_Lance",70), Weapon(960,576,"Devastating_Flail",120), Weapon(1020,612,"Legendary_Longsword",140),
+     Weapon(1080,648,"Soulstealing_Demonblade",160), Weapon(1140,684,"Blade_of_Eternal_Gods",180), Weapon(2230,1338,"Paintbrush_of_the_Devil",340), Weapon(2290,1374,"Blackhole_Hammer",380), Weapon(2350,1410,"Dimension_Bifurcating_Battleax",420),
+     Weapon(2410,1446,"The_Big_Bang_Cannon",460)} ;
      Character *c;
 
   public:
@@ -34,7 +36,7 @@ class Store
     string getName();
     void buy(Weapon i);
     int sell(Item i);
-    void openStore();
+    bool openStore();
 };
 
 //this is a super-hype way of changing all the data fields of character, including the inventory... the most important part.
@@ -46,10 +48,8 @@ Store::Store(Character &c) {
 
 //this method will open the store and get things going. It needs to be wrapped in a loop in the main method
 //for it to continue until the user is done
-void Store::openStore() {
+bool Store::openStore() {
   string currentResponse;
-  cout << "Hey there!\n";
-  wait(1);
   cout << "Would you like to buy or sell today?\n";
   wait(1);
   cout << "Or if you've got no business here, I'll need to ask you to leave.\n(Please enter buy, sell, or leave)\n";
@@ -79,10 +79,15 @@ void Store::openStore() {
     }
     else{
       cout << "Not a valid input." << endl;
-      return;
     }
   }
-
+}
+  else if(currentResponse=="leave")  {
+    cout << "You leave the store." << endl;
+    wait(1);
+    cout << endl;
+    return false;
+  }
   else if(currentResponse=="sell")  {
 
     cout << "Please enter either 'potion' or the name of the weapon you would like to sell:" << endl;
@@ -93,16 +98,10 @@ void Store::openStore() {
         //sellPotion() returns the selling value of the potion
         int money = c->sellPotionChar();
         if (money == 0) {
-          return;
+          return true;
         }
         c->incGold(money);
     }
-  else if(currentResponse=="leave")  {
-    cout << "You leave the store." << endl;
-    wait(2);
-    cout << endl;
-    return;
-  }
   else {
     int moneyBack = c->remInvWeapon(item);
     if(moneyBack != 0) {
@@ -110,14 +109,7 @@ void Store::openStore() {
     }
   }
 }
-  /*else {
-    cout << "Not a valid input." << endl;
-    wait(2);
-    cout << endl;
-    return;
-  }*/
-
-}
+return true;
 }
 
 void Store::getWepInventory() {

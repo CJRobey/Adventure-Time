@@ -22,12 +22,12 @@ private:
 of the weapon equipped */
  int offense;
  int gold;
- void setMaxHealth(int i);
 
 public:
  Character();
  Character(string name, Inventory &inv);
  string getName();
+ void setMaxHealth(int i);
  void attack(Monster &mon);
  int battle(Monster& mon);
  void levelUp();
@@ -60,7 +60,7 @@ Character::Character(string name, Inventory &inv)
 {
   this->name = name;
   this->level = 1;
-  this->maxHealth = 20;
+  this->maxHealth = 100;
   this->currHealth = maxHealth;
   this->offense = 10;
   this->gold = 0;
@@ -73,16 +73,16 @@ Character::Character(string name, Inventory &inv)
 
 void Character::levelUp() {
   this->level++;
-  setMaxHealth(maxHealth+5);
-  this->currHealth = currHealth + 5;
-  incGold(100);
+  setMaxHealth(maxHealth+50);
+  this->currHealth = currHealth + 50;
+  //incGold(100);
 
   /*Potion healing will also be determined by the amount of total health points*/
 
   //this will raise the potion's cost at stores
   inv.setPotionCost(inv.getPotCost() + 20);
   //this will change its healing ability to 1/2 + 1 of the user's max health
-  inv.setPotionHealing(((int) maxHealth * 0.5)+1);
+  inv.setPotionHealing(((int) maxHealth * 0.8)+1);
 
   this->offense = offense + 5;
 
@@ -161,12 +161,13 @@ int Character::battle(Monster &mon)
         attack(mon);
         if (mon.getHealth() <= 0) {
           cout << "Congratulations, you have won the battle." << endl;
-          incGold(10);
+          incGold(100);
+          levelUp();
           return 0;
         }
         damageAmount = mon.ptak(currHealth);
         decHealth(damageAmount);
-        cout << "You have been hit for " << damageAmount << " points." << endl;
+        cout << "you have been hit for " << damageAmount << " points." << endl;
         deadness = checkIfDead();
         if (deadness) {
           return 2;
@@ -220,7 +221,7 @@ void Character::attack(Monster &mon)
   else{
     mon.decHealth(attackPower);
     if (mon.getHealth() <= 0) {
-      cout << "Your hit landed for " << attackPower << " damage points and killed the monster!" << endl;
+      cout << "Your hit landed for " << attackPower << " damage points and killed the enemy." << endl;
       return;
     }
     cout << "The monster was hit for " << attackPower << " points." << endl;
@@ -239,7 +240,7 @@ void Character::incHealth(int damage){
   }
   else {
   this->currHealth = maxHealth;
-  cout << "You have been restored to maximum health of " << maxHealth << "points." << endl;
+  cout << "You have been restored to maximum health of " << maxHealth << " points." << endl;
   }
 }
 

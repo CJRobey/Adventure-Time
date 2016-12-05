@@ -1,6 +1,7 @@
 #include <iostream>
+#include <fstream>
 #include <string>
-#include "item.cpp"
+#include "Item.cpp"
 #include <map>
 #include <sstream>
 
@@ -53,8 +54,8 @@ void Inventory::getFileContents (string fileName)
 		{
 	while (Reader.good())
 	{
-			std::string TempLine;                  //Temp line
-			std::getline (Reader , TempLine);        //Get temp line
+			string TempLine;                  //Temp line
+			getline (Reader , TempLine);        //Get temp line
 			TempLine += "\n";                      //Add newline character
 
 			Lines += TempLine;                     //Add newline
@@ -101,7 +102,6 @@ map<string, Weapon>* Inventory::getWeaponMap() {
       string name, damage, worth, spaces, cost, healing, amount= "";
       int length,attribute;
       stringstream ss;
-      getFileContents("Char.txt");
       spaces = "                              ";
       cout << endl << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~| INVENTORY |~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
       cout << "\tName                          Effect    Price     Worth     Amount" << endl;
@@ -165,7 +165,6 @@ map<string, Weapon>* Inventory::getWeaponMap() {
             worth = Weapons[itemName].getWorth();
             it = Weapons.find(itemName);
             Weapons.erase(it);
-            disInventory();
             cout << itemName << " has been removed." << endl;
         }
 
