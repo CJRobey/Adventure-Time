@@ -84,7 +84,7 @@ int main () {
 					moreGold=true;
 				}
 				else {
-					cout << plot.text[6]
+					cout << plot.text[6];
 							moreGold=true;
 				}
 			}
