@@ -22,8 +22,8 @@ class Store
   private:
 
     //the constructor of Weapon is (buying Price, selling price, name, and damage)
-	   Weapon wepInventory [5] = {Weapon(5,3,"Rusty Spork",50), Weapon(20,12,"Dubious Dagger",70), Weapon(50,30,"Nunchucks of Unending Smiting",100),
-   Weapon(70,42,"Absurdly Sharp Lance",200), Weapon(300,180,"Blade of Eternal Gods",300)} ;
+	   Weapon wepInventory [5] = {Weapon(5,3,"Rusty_Spork",50), Weapon(20,12,"Dubious_Dagger",70), Weapon(50,30,"Nunchucks_of_Unending_Smiting",100),
+   Weapon(70,42,"Absurdly_Sharp_Lance",200), Weapon(300,180,"Blade_of_Eternal_Gods",300)} ;
      Character *c;
 
   public:
@@ -68,7 +68,11 @@ void Store::openStore() {
     }
     //this essentially just increments the potion count and decrements user gold.
     else if(resp=="potions"){
+      if(c->getGold() >= c->getInv().getPotCost()){
       buyPotion();
+    }
+    else if (c->getGold() < c->getInv().getPotCost()){
+      cout << "You do not have enough money to purchase this item." << endl;
     }
     else{
       cout << "Not a valid input." << endl;
@@ -84,19 +88,12 @@ void Store::openStore() {
 
     if (item == "potion") {
         //sellPotion() returns the selling value of the potion
-        int money = c->getInv().sellPotion();
+        int money = c->sellPotionChar();
         if (money == 0) {
           return;
         }
         c->incGold(money);
     }
-    int moneyBack = c->getInv().drop(item);
-    if(moneyBack != 0) {
-       c->incGold(moneyBack);
-    }
-
-
-  }
   else if(currentResponse=="leave")  {
     cout << "You leave the store." << endl;
     wait(2);
@@ -104,12 +101,20 @@ void Store::openStore() {
     return;
   }
   else {
+    int moneyBack = c->remInvWeapon(item);
+    if(moneyBack != 0) {
+       c->incGold(moneyBack);
+    }
+  }
+}
+  /*else {
     cout << "Not a valid input." << endl;
     wait(2);
     cout << endl;
     return;
-  }
+  }*/
 
+}
 }
 
 void Store::getWepInventory() {
@@ -171,6 +176,5 @@ void Store::buy(Weapon w) {
     c->decGold(w.getCost());
     cout << "Congratulations! You have purchased a brand new " << w.getName() << "!" << endl;
     c->incOffense(c->getInv().getWeapon());
-    c->dispCharStats();
   }
 }

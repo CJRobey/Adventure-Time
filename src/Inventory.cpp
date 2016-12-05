@@ -33,7 +33,7 @@ class Inventory {
     Potion getPotion();
     int sellPotion();
     int getPotCost();
-
+    void getFileContents(string fileName);
 };
 
 Inventory::Inventory() {
@@ -43,6 +43,25 @@ Inventory::Inventory() {
 
 }
 
+void Inventory::getFileContents (string fileName)
+{
+		ifstream Reader (fileName);             //Open file
+
+		string Lines = "";        //All lines
+
+		if (Reader)                      //Check if everything is good
+		{
+	while (Reader.good())
+	{
+			std::string TempLine;                  //Temp line
+			std::getline (Reader , TempLine);        //Get temp line
+			TempLine += "\n";                      //Add newline character
+
+			Lines += TempLine;                     //Add newline
+	}
+	cout << Lines << endl;
+		}
+}
 
 int Inventory::getPotCost() {
   return P.getCost();
@@ -76,77 +95,13 @@ map<string, Weapon>* Inventory::getWeaponMap() {
 }
 
 
-    /*void Inventory::disInventory(){
-        Weapon iteratedWeapon;
-        string name, damage, worth, spaces, cost, healing, amount= "";
-        int length,attribute;
-        stringstream ss;
-        spaces = "                    ";
-        cout << endl << "\t|~|~|~|~|~|~|~|~|~|~| INVENTORY |~|~|~|~|~|~|~|~|~|~|" << endl << endl;
-        cout << "\tWeapon         Damage    Price     Worth" << endl;
-        for(map<string, Weapon>::iterator iter = Weapons.begin(); iter != Weapons.end(); ++iter) {
-            iteratedWeapon = Weapons[iter->first];
-            name = iteratedWeapon.getName();
-            length = name.length();
-            cout << "\t" << name << spaces.substr(0,15-length);
-            attribute = iteratedWeapon.getDamage();
-            ss << attribute;
-            damage = ss.str();
-            ss.str("");
-            length = damage.length();
-            cout << damage << spaces.substr(0,10-length);
-            attribute = iteratedWeapon.getCost();
-            ss << attribute;
-            cost = ss.str();
-            ss.str("");
-            length = cost.length();
-            cout << cost << spaces.substr(0,10-length);
-            attribute = iteratedWeapon.getWorth();
-            ss << attribute;
-            worth = ss.str();
-            ss.str("");
-            cout << worth << endl;
-        }
-        cout << endl;
-        cout << "\tName         Healing   Price     Worth     Amount" << endl;
-            name = P.getName();
-            //cout << "Name is " << name << endl;
-            length = name.length();
-            //cout << "Length of name is " << length << endl;
-            cout << "\t" << name << spaces.substr(0,15-length);
-            attribute = P.getHealing();
-            ss << attribute;
-            healing = ss.str();
-            ss.str("");
-            length = healing.length();
-            cout << healing << spaces.substr(0,10-length);
-            attribute = P.getCost();
-            ss << attribute;
-            cost = ss.str();
-            ss.str("");
-            length = cost.length();
-            cout << cost << spaces.substr(0,10-length);
-            attribute = P.getWorth();
-            ss << attribute;
-            worth = ss.str();
-            ss.str("");
-            length = worth.length();
-            cout << worth << spaces.substr(0,10-length);
-            attribute = potCount;
-            ss << attribute;
-            amount = ss.str();
-            ss.str("");
-            cout << amount << endl;
-        cout << endl;
-        cout << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
-    }*/
-
     void Inventory::disInventory()
     {
       Weapon iteratedWeapon;
       string name, damage, worth, spaces, cost, healing, amount= "";
       int length,attribute;
       stringstream ss;
+      getFileContents("Char.txt");
       spaces = "                              ";
       cout << endl << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~| INVENTORY |~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
       cout << "\tName                          Effect    Price     Worth     Amount" << endl;

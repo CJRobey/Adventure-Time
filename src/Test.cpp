@@ -1,17 +1,38 @@
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "StoreFront.cpp"
 
 using namespace std;
+
+void getFileContents (string fileName)
+{
+		ifstream Reader (fileName);             //Open file
+
+		string Lines = "";        //All lines
+
+		if (Reader)                      //Check if everything is good
+		{
+	while (Reader.good())
+	{
+			std::string TempLine;                  //Temp line
+			std::getline (Reader , TempLine);        //Get temp line
+			TempLine += "\n";                      //Add newline character
+
+			Lines += TempLine;                     //Add newline
+	}
+	cout << Lines << endl;
+		}
+}
+
 int main () {
 	int i=1;
 
 	Inventory inv = Inventory();
-	inv.disInventory();
 
 	string name = "Hero";
 	Character *c = new Character(name, inv);
-
+	getFileContents("Title.txt");
 
 	while (i!=0) {
 		cout<< "0 exit" << endl;
