@@ -58,7 +58,6 @@ Character::Character() {
 
 Character::Character(string name, Inventory &inv)
 {
-  //Initialize character at level one.
   this->name = name;
   this->level = 1;
   this->maxHealth = 100;
@@ -110,7 +109,6 @@ void Character::decGold(int i) {
   this->gold -= i;
 }
 
-//This will be called for equipping new weapons and leveling up.
 void Character::incOffense(int x) {
   this->offense = offense + x;
 }
@@ -125,8 +123,12 @@ string Character::getName()
     return this->name;
 };
 
+//@caleb this getWeapon isn't defined look at this
+//void Character::gotAWeapon() {
+  //this->offense = this->offense + getWeapon();
+//}
 
-/*Function enters a battle instance */
+
 int Character::battle(Monster &mon)
 {
 
@@ -152,9 +154,10 @@ int Character::battle(Monster &mon)
     userIn = num;
 
     switch(userIn) {
-      
-	//in this case,the user attacks the enemy.
-	case 1:
+      /*THIS METHOD IS NOT FINISHED
+      Need to account for cases in which the character dies*/
+      //choose to fight
+      case 1:
         attack(mon);
         if (mon.getHealth() <= 0) {
           cout << "Congratulations, you have won the battle." << endl;
@@ -208,7 +211,6 @@ int Character::getCurrHealth() {
   return this->currHealth;
 }
 
-/*this method points to the input Monster parameter and decrements its health if necessary*/
 void Character::attack(Monster &mon)
 {
   int attackPower = rand() % (offense + 1);
@@ -242,7 +244,7 @@ void Character::incHealth(int damage){
   }
 }
 
-//Consistently checking to see if user is dead.
+
 bool Character::checkIfDead(){
   if (currHealth <= 0){
     cout << "You've died in battle!\n*GAME OVER*" << endl;
@@ -255,7 +257,6 @@ int Character::sellPotionChar() {
   return this->inv.sellPotion();
 }
 
-//void function that increments character health
 void Character::heal()
 {
   int recovPoints = inv.usePotion();
@@ -288,7 +289,6 @@ void Character::dispCharStats()
 
 }
 
-//return the map of weapons by reference
 map<string, Weapon>* Character::getWepInventory() {
   return this->inv.getWeaponMap();
 }

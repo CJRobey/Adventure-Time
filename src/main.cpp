@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include <fstream>
+//#include <fstream>
 #include <stdio.h>
 #include <ctype.h>
 #include <limits>
@@ -17,7 +17,7 @@ bool chance(int luck) { //this function returns a boolean based on a given chanc
 	else return false;
 }
 
-void getFileContents (string fileName) //this function is used to display the ascii text
+/*void //getFileContents (string fileName) //this function is used to display the ascii text
 {
 		ifstream Reader (fileName);             //Open file
 		string Lines = "";        //All lines
@@ -32,7 +32,7 @@ void getFileContents (string fileName) //this function is used to display the as
 	}
 	cout << Lines << endl;
 		}
-}
+}*/
 
 int input(int choices, Character *c) { //this function makes sure that the input is valid and displays character info
 	int pChoice;
@@ -59,6 +59,7 @@ int input(int choices, Character *c) { //this function makes sure that the input
 }
 
 bool Death(Character *character) { //handles the option to quit if the character dies
+	////getFileContents("GrimReaper.txt");
 	cout<<"Do you want to continue?\n\t1: Yes\n\t2: No\n";
 	int pChoice = input(2,character);
 	if (pChoice==1) {
@@ -89,15 +90,14 @@ int main () {
 	Monster mon = Monster(0,0,0,"");
 
 
-	getFileContents("Title.txt");
-	cout<<"\nEnter 0 at any point to see your inventory.\n\n"
+	//getFileContents("Title.txt");
+	cout<<"\nEnter 0 at any point to see your inventory.\n\n";
 	cout<<"\nWhat is your name?\n";
 	cin>>pName;
 	Character *character = new Character(pName, i);
-	
+
 	if (pName==";") { //creates developer mode
 		cout << "ur a dev.\n";
-		pName=="SuperDev";
 		character->setMaxHealth(50000);
 		character->incHealth(50000);
 		character->incOffense(50000);
@@ -106,7 +106,7 @@ int main () {
 	cout<<"Demo Mode?\n1: Yes\n2: No";
 	pChoice=input(2,character);
 	if (pChoice==1) { //enters demo mode
-		save=5;	
+		save=5;
 	}
 	while (!end) { //encompassing while statement runs the code until the game ends
 	switch (save) {//switch statement allows for save points
@@ -114,8 +114,8 @@ int main () {
 			/*We used if and nested if statements to build the plotline. In order
 to make main more manageable, we used the serperate class plot to keep
 track of the storyline strings*/
-					
-			
+
+
 	case (1): {
 		cout << plot.text[0] << plot.text[1];
 
@@ -188,6 +188,7 @@ track of the storyline strings*/
 	pChoice = input(2,character);
 
 	if(pChoice == 1){
+		//getFileContents("Wolf.txt");
 		mon = Monster(40,10,90,"Wolves");//fight wolves
 		battRes=character->battle(mon);
 		if (battRes==2) {
@@ -216,6 +217,7 @@ track of the storyline strings*/
 			pChoice = input(3,character);
 
 			if(pChoice == 1){
+				//getFileContents("Bandits.txt");
 				mon = Monster(50,15,80,"Bandits");//fight bandits
 				battRes = character->battle(mon);
 				if (battRes==0) {
@@ -230,6 +232,7 @@ track of the storyline strings*/
 
 			if(pChoice == 2){
 				if(chance(40) == true){
+					//getFileContents("Bandits.txt");
 					mon = Monster(40,10,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
@@ -242,6 +245,7 @@ track of the storyline strings*/
 				}
 				}
 				else {
+					//getFileContents("Bandits.txt");
 					mon = Monster(50,15,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
@@ -260,6 +264,7 @@ track of the storyline strings*/
 					cout << plot.text[25];
 				}
 				if(chance(60) == false){
+					//getFileContents("Bandits.txt");
 					mon = Monster(50,15,80,"Bandits");//fight bandits
 					battRes = character->battle(mon);
 					if (battRes==0) {
@@ -287,6 +292,7 @@ track of the storyline strings*/
 		if (pChoice==1) {
 			cout<<plot.text[28];
 			character->incHealth(20);
+			//getFileContents("Goblins.txt");
 			mon = Monster(50,30,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
@@ -299,6 +305,7 @@ track of the storyline strings*/
 		}
 		if (pChoice==2) {
 			cout<<plot.text[29];
+			//getFileContents("Goblins.txt");
 			mon = Monster(40,20,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
@@ -312,6 +319,7 @@ track of the storyline strings*/
 		cout<<plot.text[31];
 		pChoice = input(2,character);
 		while (pChoice!=2) {
+			//getFileContents("Goblins.txt");
 			mon = Monster(40,20,90,"Goblins"); //fights goblins
 			battRes = character->battle(mon);
 				if (battRes==2) {
@@ -355,7 +363,7 @@ track of the storyline strings*/
 			if (numCorrect>=2) {
 				cout<<plot.text[40];
 				cout<<plot.text[41];
-				character.incGold(200);
+				character->incGold(200);
 				helped++;
 			}
 		}
@@ -388,7 +396,7 @@ track of the storyline strings*/
 			}
 			if (pChoice==3) {
 				cout<<plot.text[49];
-				getFileContents("Driver.txt");
+				//getFileContents("Driver.txt");
 				mon = Monster(200,30,50,"Carriage Driver");//fight carriage driver
 				battRes = character->battle(mon);
 				if (battRes==2) {
@@ -418,7 +426,7 @@ track of the storyline strings*/
 
 
 	}
-	
+
 	case (3): {
 		save=3;
 		pChoice = 0;
@@ -488,6 +496,7 @@ track of the storyline strings*/
 			if(pChoice == 1 || pChoice == 2){
 				if(pChoice == 1){
 					cout << plot.text[75];
+					//getFileContents("Thieves.txt");
 					mon = Monster(250,40,50,"Thieves");//fight thieves
 					battRes=character->battle(mon);
 					if (battRes==2) {
@@ -501,6 +510,7 @@ track of the storyline strings*/
 					cout << plot.text[76];
 					pChoice = input(2,character);
 					if(pChoice == 1){
+						//getFileContents("Thieves.txt");
 						mon = Monster(240,30,50,"Thieves");//fight thievs
 						battRes=character->battle(mon);
 						if (battRes==2) {
@@ -512,6 +522,7 @@ track of the storyline strings*/
 					}
 					if(pChoice == 2){
 						cout << plot.text[77];
+						//getFileContents("Thieves.txt");
 						mon = Monster(250,40,50,"Thieves");//fight thieves
 						battRes=character->battle(mon);
 						if (battRes==2) {
@@ -595,6 +606,7 @@ track of the storyline strings*/
 		save=4;
 		cout<<plot.text[90];
 		cout<<plot.text[91];
+		//getFileContents("FireMage.txt");
 		mon = Monster(400,50,40,"Fire Mage");//fight fire mage
 		battRes=character->battle(mon);
 		if (battRes==2) {
@@ -614,6 +626,7 @@ track of the storyline strings*/
 		if (pChoice==2) {
 			cout<<plot.text[96];
 		}
+		//getFileContents("IceMage.txt");
 		mon = Monster(400,60,40,"Ice Mage");//fight ice mage
 		battRes=character->battle(mon);
 		if (battRes==2) {
@@ -627,6 +640,7 @@ track of the storyline strings*/
 		pChoice=input(2,character);
 		if ((pChoice==1&&chance(50))||pChoice==2) {
 			cout<<plot.text[98];
+			//getFileContents("StormMage.txt");
 			mon = Monster(400,70,40,"Storm Mage");//fight storm mage
 			battRes=character->battle(mon);
 			if (battRes==2) {
@@ -671,7 +685,7 @@ track of the storyline strings*/
 				}
 			}
 			cout<<plot.text[106];
-			getFileContents("Dragon.txt");
+			//getFileContents("Dragon.txt");
 			mon = Monster(2000,80,0,"Dragon");//fight dragon
 			battRes=character->battle(mon);
 			if (battRes==2) {
@@ -696,6 +710,7 @@ track of the storyline strings*/
 			if (helped==7) {
 				cout<<plot.text[113];
 				cout<<plot.text[114];
+				//getFileContents("King.txt");
 				mon = Monster(1,0,0,"King");//fight king
 				battRes=character->battle(mon);
 				cout<<plot.text[115];
@@ -718,6 +733,7 @@ track of the storyline strings*/
 			}
 			if (pChoice==2&&helped!=7) {
 				cout<<plot.text[122];
+				//getFileContents("Guards.txt");
 				mon = Monster(300,50,0,"Guards");//fight guards
 				battRes=character->battle(mon);
 				if (battRes==2) {
@@ -736,12 +752,13 @@ track of the storyline strings*/
 	case 5: { //used for end of game and demo mode
 		pChoice=0;
 		while (pChoice!=1) {
-			cout<<"1: Quit\n2: Fight\n3: use store\n4:";
+			cout<<"\n1: Quit\n2: Fight\n3: Use store\n";
 			pChoice=input(3, character);
 			if (pChoice==1) {
-				break;
+				return 0;
 			}
 			if (pChoice==2) {
+				//getFileContents("Goblins.txt");
 				mon = Monster(100,100,100,"Monster");//fight random monster
 				battRes=character->battle(mon);
 				if (battRes==2) {
@@ -753,10 +770,11 @@ track of the storyline strings*/
 			}
 			if (pChoice==3) {
 				Store *s = new Store(*character);
-				while(s->openStore());		
+				while(s->openStore());
 			}
 	}
 	}
+}
 }
 return 0;
 	}
