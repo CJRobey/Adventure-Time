@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+using namespace std;
+int main () {
+	int i=1;
+	Inventory i;
+	Character c = new Character("Hero", i);
+	Store s;
+	while (i!=0) {
+		cout<< "0 exit";
+		cout<< "1 fight";
+		cout<< "2 get gold";
+		cout<< "4 use store";
+		cout<< "see stats";
+		
+		cin>>i;
+		if (i==1) {
+			c.battle(Monster(100,50,50,"Enemy"));
+		}
+		if (i==2) {
+			c.incGold(10000);
+		}
+		if (i==3) {
+			s.openStore();
+		}
+		if (i==4) {
+			c.dispCharStats();
+		}
+	}
+	delete c;
+	
+	
+	
+}
