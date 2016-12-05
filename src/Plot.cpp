@@ -2,6 +2,10 @@
 #include <string>
 using namespace std;
 
+
+/*this class exists to store the public data field "text," which is a referenced array to the 
+various plot scenarios in the main story line. This array is called by index in the main method
+to continue the main story line.*/
 class Plot{
 public:
   string text[200] = {"In the small town of LilyPond, in the town center, you are about to be set \non the quest of your life.",
