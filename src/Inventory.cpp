@@ -1,5 +1,5 @@
 #include <iostream>
-#include <fstream>
+//#include <fstream>
 #include <string>
 #include "Item.cpp"
 #include <map>
@@ -44,7 +44,7 @@ Inventory::Inventory() {
 
 }
 
-void Inventory::getFileContents (string fileName)
+/*void Inventory::getFileContents (string fileName)
 {
 		ifstream Reader (fileName);             //Open file
 
@@ -62,7 +62,7 @@ void Inventory::getFileContents (string fileName)
 	}
 	cout << Lines << endl;
 		}
-}
+}*/
 
 int Inventory::getPotCost() {
   return P.getCost();
