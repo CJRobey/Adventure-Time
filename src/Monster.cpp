@@ -22,7 +22,7 @@ class Monster {
     int ptak(int currHealth);
 };
 
-Monster::Monster(int health, int attack, int x, string Name)
+Monster::Monster(int health, int attack, int x, string name)
 {
 	this->health=health;
 	this->attack=attack;
@@ -50,13 +50,13 @@ void Monster::decHealth(int attackPower){
 
 //The monster will either hit for its full amount or will fail to hit at all.
 int Monster::ptak(int currHealth){
- cout<<"Your current health is " << currHealth << " but not for long!" << endl;
  int canAttack = rand() % (5);
  if(canAttack==0) {
-	cout<< "Oh no! I missed! How is that possible!?" << endl;
+	cout<< this->name <<": Oh no! I missed! How is that possible!?" << endl;
 	return 0;
  }
  else{
+  cout<<"Your current health is " << (currHealth-attack) << " but not for long!" << endl;
 	return attack;
  }
 }

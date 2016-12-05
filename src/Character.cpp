@@ -45,7 +45,9 @@ public:
  void setInventory();
  Inventory getInv();
  void addInvWeapon(Weapon w);
+ int remInvWeapon(string item);
  int addPotionToInv();
+ int sellPotionChar();
 
 
 };
@@ -64,8 +66,8 @@ Character::Character(string name, Inventory &inv)
   this->gold = 0;
   this->inv = inv;
   /*Potion healing will also be determined by the amount of total health points*/
-  inv.setPotionCost(20);
-  inv.setPotionHealing(10);
+  this->inv.setPotionCost(20);
+  this->inv.setPotionHealing(10);
 
 }
 
@@ -222,7 +224,7 @@ void Character::attack(Monster &mon)
       return;
     }
     cout << "The monster was hit for " << attackPower << " points." << endl;
-    cout << "The monster now has " << mon.getHealth() << " health points remainin." << endl;
+    cout << "The monster now has " << mon.getHealth() << " health points remaining." << endl;
   }
 }
 
@@ -248,6 +250,10 @@ bool Character::checkIfDead(){
     return true;
   }
   return false;
+}
+
+int Character::sellPotionChar() {
+  return this->inv.sellPotion();
 }
 
 void Character::heal()
@@ -290,6 +296,9 @@ void Character::addInvWeapon(Weapon w) {
   this->inv.addWeapon(w);
 }
 
+int Character::remInvWeapon(string item) {
+  return this->inv.drop(item);
+}
 
 //this will return the cost of the potion to the Store class
 int Character::addPotionToInv() {
