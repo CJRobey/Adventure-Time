@@ -4,7 +4,7 @@ class Plot{
         return this->text;
     }
 
-    string[] text = {"In the small town of (TOWN NAME 1), in the town center, (PLAYER NAME) is about to be set \non the quest of their life.",
+    string[] text = {"In the small town of LilyPond, in the town center, you are about to be set \non the quest of your life.",
     "\n\nA courier rides into the middle of the town square announcing to all that can hear. You gather \naround the courier with the rest of the citizens in the area. The courier exclaims \“Hear Ye! Hear \nYe! The king (KING NAME) has put a 10,000 gold bounty on the head of the dragon that has \nbeen terrorizing (TOWN NAME 2). Any brave soul that finds themselves capable of the task is \nwelcome to attempt this feat. 500 gold will be given in order to pay for equipment.\"",
     "\n\nWhat would you like to do?\n\t1: Accept the bounty\n\t2: Ask for more information\n\t3: Ask for more gold (chance)",
     "\n\nCourier: \“Excellent, Here is your gold. I would advise that you visit \nyour local shop and then depart immediately. Upon your arrival in (TOWN NAME 2) visit the \ncourier’s outpost near the town hall. Good luck.\” The courier rides off, leaving you to prepare for \nyour quest.",
@@ -94,7 +94,7 @@ class Plot{
     "\n\nWhat would you like to do:\n\t1: Buy\n\t2: Leave",
     "\n\nYou leave the store and return to the north gate",
     "\n\n You leave the town through the north gate and continue on your quest to slay the dragon. \nThe mountain is only about a day’s journey so you are mentally preparing yourself to fight the dragon.",
-
+    
 
 
 }
