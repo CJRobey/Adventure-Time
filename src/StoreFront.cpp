@@ -24,7 +24,7 @@ class Store
     //the constructor of Weapon is (buying Price, selling price, name, and damage)
 	   Weapon wepInventory [5] = {Weapon(5,3,"Rusty Spork",50), Weapon(20,12,"Dubious Dagger",70), Weapon(50,30,"Nunchucks of Unending Smiting",100),
    Weapon(70,42,"Absurdly Sharp Lance",200), Weapon(300,180,"Blade of Eternal Gods",300)} ;
-     Character c;
+     Character *c;
 
   public:
     Store(Character &c);
@@ -40,7 +40,7 @@ class Store
 //this is a super-hype way of changing all the data fields of character, including the inventory... the most important part.
 //but you're also able to change gold, which is cool.
 Store::Store(Character &c) {
-  this->c = c;
+  this->c = &c;
 }
 
 
@@ -84,15 +84,15 @@ void Store::openStore() {
 
     if (item == "potion") {
         //sellPotion() returns the selling value of the potion
-        int money = c.getInv().sellPotion();
+        int money = c->getInv().sellPotion();
         if (money == 0) {
           return;
         }
-        c.incGold(money);
+        c->incGold(money);
     }
-    int moneyBack = c.getInv().drop(item);
+    int moneyBack = c->getInv().drop(item);
     if(moneyBack != 0) {
-       c.incGold(moneyBack);
+       c->incGold(moneyBack);
     }
 
 
@@ -149,27 +149,28 @@ void Store::getWepInventory() {
 }
 
 void Store::buyPotion() {
-  int price = c.addPotionToInv();
-  c.decGold(price);
+  int price = c->addPotionToInv();
+  c->decGold(price);
   cout << "You have added a potion to your inventory for " << price << " gold coins." << endl;
-  cout << "You now have " << c.getInv().getPotCount() << " potions out of your 10 available slots." << endl;
+  cout << "You now have " << c->getInv().getPotCount() << " potions out of your 10 available slots." << endl;
 }
 
 
 void Store::buy(Weapon w) {
-  if (w.getCost() > this->c.getGold()) {
+  if (w.getCost() > c->getGold()) {
     cout << "You do not have enough money to purchase this item." << endl;
-    cout << "this item costs " << w.getCost() << " gold, and you only have " << this->c.getGold() << endl;
+    cout << "this item costs " << w.getCost() << " gold, and you only have " << c->getGold() << endl;
     return;
   }
-  else if (c.getInv().isElemOfWeap(w.getName())) {
+  else if (c->getInv().isElemOfWeap(w.getName())) {
     cout << "You already have this item. No need to purchase it again." << endl;
     return;
   }
   else {
-    c.addInvWeapon(w);
-    c.decGold(w.getCost());
+    c->addInvWeapon(w);
+    c->decGold(w.getCost());
     cout << "Congratulations! You have purchased a brand new " << w.getName() << "!" << endl;
-    c.incOffense(c.getInv().getWeapon());
+    c->incOffense(c->getInv().getWeapon());
+    c->dispCharStats();
   }
 }
