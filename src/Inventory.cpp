@@ -10,37 +10,35 @@ using namespace std;
 class Inventory {
 
   private:
-    map<string, Weapon> Weapons;
-    Potion P;
-    int potCount;
-    int weaponCount;
+    map<string, Weapon> Weapons;	//creates hashmap of Weapon objects
+    Potion P;	//creates one Potion object
+    int potCount;	//count variable for potions
 
   public:
-    Inventory();
-    void disInventory();
-    int drop(string itemName);
-    void addPotion();
-    void addWeapon(Weapon W);
-    int usePotion();
-    int getWeapon();
-    void setPotionAmount(int amount);
-    void setPotionHealing(int healing);
-    void setPotionCost(int cost);
-    int getPotionCost();
-    int getPotionHealing();
-    bool isElemOfWeap(string s);
-    map<string, Weapon>* getWeaponMap();
-    int getPotCount();
-    Potion getPotion();
-    int sellPotion();
-    int getPotCost();
-    void getFileContents(string fileName);
+    Inventory();	//default constructor
+    void disInventory();	//display contents of Inventory function
+    int drop(string itemName);	//sell a Weapon function
+    void addPotion();	//add a potion to inventory
+    void addWeapon(Weapon W);	//add a weapon to inventory
+    int usePotion();	//remove a potion from inventory and return the amount of healing it does
+    int getWeapon();	//returns the aggregate damage value of the weapons
+    void setPotionAmount(int amount);	//set the amount of Potion P
+    void setPotionHealing(int healing);	//set the healing value of Potion P
+    void setPotionCost(int cost);	//set the cost value of Potion P
+    int getPotionCost();	//returns the cost of Potion P
+    int getPotionHealing();	//returns the healing value of Potion P
+    bool isElemOfWeap(string s);	//checks to see if the weapon is already in the Weapons hashmap
+    map<string, Weapon>* getWeaponMap();	//returns the Weapon hashmap
+    int getPotCount();	//returns the amount of Potion P in inventory
+    Potion getPotion();	//returns Potion P
+    int sellPotion();	//decrements the amount of Potion P and returns the selling price as an int
+    int getPotCost();	//returns the cost value of Potion P
+    void getFileContents(string fileName);	//reads in files for ASCII pictures
 };
 
 Inventory::Inventory() {
   /*instantiate a level one character Inventory, which contains nothing.*/
   this->potCount = 0;
-  this->weaponCount = 0;
 
 }
 
@@ -105,12 +103,12 @@ map<string, Weapon>* Inventory::getWeaponMap() {
       spaces = "                              ";
       cout << endl << "\t|~|~|~|~|~|~|~|~|~|~|~|~|~|~| INVENTORY |~|~|~|~|~|~|~|~|~|~|~|~|~|~|" << endl << endl;
       cout << "\tName                          Effect    Price     Worth     Amount" << endl;
-      for(map<string, Weapon>::iterator iter = Weapons.begin(); iter != Weapons.end(); ++iter)
+      for(map<string, Weapon>::iterator iter = Weapons.begin(); iter != Weapons.end(); ++iter)	//iterator parses through Weapons hashmap and prints out the contents
       {
         iteratedWeapon = Weapons[iter->first];
         name = iteratedWeapon.getName();
         length = name.length();
-        cout << "\t" << name << spaces.substr(0,30-length);
+        cout << "\t" << name << spaces.substr(0,30-length);	//finds correct spacing to keep columns aligned
         attribute = iteratedWeapon.getDamage();
         ss << attribute;
         damage = ss.str();
@@ -130,7 +128,7 @@ map<string, Weapon>* Inventory::getWeaponMap() {
         length = worth.length();
         cout << worth << spaces.substr(0,10-length) << "1" << endl;
       }
-      cout << "\t" << "Potion" << spaces.substr(0,24);
+      cout << "\t" << "Potion" << spaces.substr(0,24);	//prints out contents of Potion P in line with the contents of the Weapons hash map
       attribute = P.getHealing();
       ss << attribute;
       healing = ss.str();
@@ -161,14 +159,14 @@ map<string, Weapon>* Inventory::getWeaponMap() {
     int Inventory::drop(string itemName) {
         int worth;
         map<string, Weapon>::iterator it;
-        if (Weapons.count(itemName)) {
+        if (Weapons.count(itemName)) {	//checks to see if the weapon is in the Weapons hash map
             worth = Weapons[itemName].getWorth();
             it = Weapons.find(itemName);
             Weapons.erase(it);
             cout << itemName << " has been removed." << endl;
         }
 
-        else if (!itemName.compare(P.getName())) {
+        else if (!itemName.compare(P.getName())) {	//checks to see if the string is equal to 'Potion'
             if (potCount >= 1) {
                 potCount--;
                 worth = P.getWorth();
@@ -213,7 +211,7 @@ map<string, Weapon>* Inventory::getWeaponMap() {
         return healing;
     }
 
-    int Inventory::getWeapon() {
+    int Inventory::getWeapon() {	//iterates through the Weapons hash map and returns the largest damage value of the weapons
         Weapon currentWeapon;
         int maxDamage = 0;
         for(map<string, Weapon>::iterator iter = Weapons.begin(); iter != Weapons.end(); ++iter) {
