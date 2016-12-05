@@ -747,6 +747,7 @@ track of the storyline strings*/
 				character->incGold(10000);
 			}
 		}
+		getFileContents("Horizon.txt");
 		end=true;
 	}
 	case 5: { //used for end of game and demo mode
